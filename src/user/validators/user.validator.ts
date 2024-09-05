@@ -5,7 +5,7 @@ import {
     IsString,
     validateSync,
 } from 'class-validator';
-import { IUserEntity } from './user.entity';
+import { IUserEntity } from '../entities/user.entity';
 
 export class UserRules implements IUserEntity {
     @IsString()
@@ -19,8 +19,7 @@ export class UserRules implements IUserEntity {
     email: string;
 
     @IsString()
-    @IsOptional()
-    password?: string;
+    password: string;
 
     @IsDateString()
     @IsOptional()
@@ -31,12 +30,14 @@ export class UserRules implements IUserEntity {
         firstName,
         surname,
         created_at,
+        password
     }: IUserEntity) {
         Object.assign(this, {
             created_at,
             email,
             firstName,
             surname,
+            password
         });
     }
 }

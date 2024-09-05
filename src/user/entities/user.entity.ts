@@ -1,11 +1,11 @@
 import { EntityValidationError } from '@/shared/errors/entity-validation.error';
-import { UserValidator } from './user.validator';
+import { UserValidator } from '../validators/user.validator';
 
 export interface IUserEntity {
   firstName: string;
   surname: string;
   email: string;
-  password?: string;
+  password: string;
   created_at?: Date;
 }
 
