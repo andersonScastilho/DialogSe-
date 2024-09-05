@@ -16,29 +16,20 @@ describe('Entity User', () => {
   });
 
   it('There should be an error in the first name', () => {
-    expect(() => new UserEntity({
-      firstName: 15 as any,
-      surname: 'Doe',
-      email: 'johndoe@test.com',
-      password: '123456',
-    })).toThrow(EntityValidationError)
+    expect(() => new UserEntity(UserDataBuilder({
+      firstName: 15 as any
+    }))).toThrow(EntityValidationError)
   });
 
   it('There should be an error in the surname', () => {
-    expect(() => new UserEntity({
-      firstName: 'John',
+    expect(() => new UserEntity(UserDataBuilder({
       surname: 15 as any,
-      email: 'johndoe@test.com',
-      password: '123456',
-    })).toThrow(EntityValidationError)
+    }))).toThrow(EntityValidationError)
   });
 
   it('There should be an error in the email', () => {
-    expect(() => new UserEntity({
-      firstName: 'John',
-      surname: 'Doe',
+    expect(() => new UserEntity(UserDataBuilder({
       email: 15 as any,
-      password: '123456',
-    })).toThrow(EntityValidationError)
+    }))).toThrow(EntityValidationError)
   });
 });
