@@ -1,16 +1,17 @@
-import { UserValidator } from "./user.validator";
+import { EntityValidationError } from '@/shared/errors/entity-validation.error';
+import { UserValidator } from './user.validator';
 
 export interface IUserEntity {
   firstName: string;
   surname: string;
   email: string;
   password?: string;
-  created_at?: Date
+  created_at?: Date;
 }
 
 export class UserEntity {
   constructor(private readonly user: IUserEntity) {
-    this.validate(user)
+    UserEntity.validate(user);
   }
 
   get firstName() {
@@ -29,12 +30,12 @@ export class UserEntity {
     return this.user.password;
   }
 
-  validate(data: IUserEntity) {
-    const validator = new UserValidator()
-    const isValid = validator.validate(data)
+  static validate(data: IUserEntity) {
+    const validator = new UserValidator();
+    const isValid = validator.validate(data);
 
     if (!isValid) {
-      console.log(validator.errors)
+      throw new EntityValidationError(isValid);
     }
   }
 }
