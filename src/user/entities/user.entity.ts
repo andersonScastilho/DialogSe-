@@ -41,4 +41,8 @@ export class UserEntity {
       throw new EntityValidationError(isValid);
     }
   }
+
+  toJson() {
+    return this.user;
+  }
 }
