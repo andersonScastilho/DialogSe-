@@ -17,19 +17,33 @@ export class UserEntity {
   get firstName() {
     return this.user.firstName;
   }
+  set firstName(data: string) {
+    UserEntity.validate({ ...this.user, firstName: data })
+    this.user.firstName = data
+  }
 
   get surname() {
     return this.user.surname;
   }
+  set surname(data: string) {
+    UserEntity.validate({ ...this.user, surname: data })
+    this.user.surname = data
+  }
 
   get email() {
     return this.user.email;
+  }
+  set email(data: string) {
+    UserEntity.validate({ ...this.user, email: data })
+    this.user.email = data
+
   }
 
   get password() {
     return this.user.password;
   }
   set password(data: string) {
+    UserEntity.validate({ ...this.user, password: data })
     this.user.password = data;
   }
 

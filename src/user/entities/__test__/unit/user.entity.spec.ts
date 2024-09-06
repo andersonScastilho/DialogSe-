@@ -32,4 +32,32 @@ describe('Entity User', () => {
       email: 15 as any,
     }))).toThrow(EntityValidationError)
   });
+
+
+  //Testando set methods
+  it('Should change the password with the method set password', () => {
+    const newPassword = '123456'
+    sut.password = newPassword
+    expect(sut.password).toBe(newPassword)
+  })
+
+  it('Should change the email with the method set email', () => {
+    const newEmail = 'teste@gmail.com'
+    sut.email = newEmail
+    expect(sut.email).toBe(newEmail)
+  })
+
+  it('Should change the surname with the method set surname', () => {
+    const newSurname = 'Leonardo da Silva Castilho'
+    sut.surname = newSurname
+    expect(sut.surname).toBe(newSurname)
+  })
+
+  it('Should change the first name with the method set firstName', () => {
+    const newFirstName = 'Anderson'
+    sut.firstName = newFirstName
+    expect(sut.firstName).toBe(newFirstName)
+  })
+
+
 });
