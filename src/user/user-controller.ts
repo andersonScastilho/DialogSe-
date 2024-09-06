@@ -3,9 +3,9 @@ import { CreateUserUseCase } from './use-case/create-user.use-case';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { OutputUserDto } from './dtos/output-user.dto';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
-  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
+  constructor(private readonly createUserUseCase: CreateUserUseCase) { }
 
   @Post()
   async create(@Body() data: CreateUserDto) {
