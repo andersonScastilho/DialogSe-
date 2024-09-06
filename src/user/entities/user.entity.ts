@@ -29,6 +29,9 @@ export class UserEntity {
   get password() {
     return this.user.password;
   }
+  set password(data: string) {
+    this.user.password = data;
+  }
 
   static validate(data: IUserEntity) {
     const validator = new UserValidator();
