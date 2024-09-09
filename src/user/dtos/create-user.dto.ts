@@ -11,7 +11,7 @@ export class CreateUserDto implements IUserEntity {
     firstName: string;
 
     @IsString()
-    surname: string;
+    lastName: string;
 
     @IsString()
     @IsEmail()

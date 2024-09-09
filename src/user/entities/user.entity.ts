@@ -3,7 +3,7 @@ import { UserValidator } from '../validators/user.validator';
 
 export interface IUserEntity {
   firstName: string;
-  surname: string;
+  lastName: string;
   email: string;
   password: string;
   created_at?: Date;
@@ -22,12 +22,12 @@ export class UserEntity {
     this.user.firstName = data
   }
 
-  get surname() {
-    return this.user.surname;
+  get lastName() {
+    return this.user.lastName;
   }
-  set surname(data: string) {
-    UserEntity.validate({ ...this.user, surname: data })
-    this.user.surname = data
+  set lastName(data: string) {
+    UserEntity.validate({ ...this.user, lastName: data })
+    this.user.lastName = data
   }
 
   get email() {

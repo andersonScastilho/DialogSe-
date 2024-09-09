@@ -9,6 +9,6 @@ export function UserDataBuilder(data: Props): IUserEntity {
         email: data.email ?? faker.internet.email(),
         firstName: data.firstName ?? faker.person.firstName(),
         password: data.password ?? faker.internet.password(),
-        surname: data.surname ?? faker.person.lastName(),
+        lastName: data.lastName ?? faker.person.lastName(),
     }
 }

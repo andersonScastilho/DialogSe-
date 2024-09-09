@@ -12,7 +12,7 @@ export class UserRules implements IUserEntity {
     firstName: string;
 
     @IsString()
-    surname: string;
+    lastName: string;
 
     @IsString()
     @IsEmail()
@@ -28,7 +28,7 @@ export class UserRules implements IUserEntity {
     constructor({
         email,
         firstName,
-        surname,
+        lastName,
         created_at,
         password
     }: IUserEntity) {
@@ -36,7 +36,7 @@ export class UserRules implements IUserEntity {
             created_at,
             email,
             firstName,
-            surname,
+            lastName,
             password
         });
     }

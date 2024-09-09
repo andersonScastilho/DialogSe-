@@ -21,9 +21,9 @@ describe('Entity User', () => {
     }))).toThrow(EntityValidationError)
   });
 
-  it('There should be an error in the surname', () => {
+  it('There should be an error in the lastName', () => {
     expect(() => new UserEntity(UserDataBuilder({
-      surname: 15 as any,
+      lastName: 15 as any,
     }))).toThrow(EntityValidationError)
   });
 
@@ -47,10 +47,10 @@ describe('Entity User', () => {
     expect(sut.email).toBe(newEmail)
   })
 
-  it('Should change the surname with the method set surname', () => {
-    const newSurname = 'Leonardo da Silva Castilho'
-    sut.surname = newSurname
-    expect(sut.surname).toBe(newSurname)
+  it('Should change the lastName with the method set lastName', () => {
+    const newlastName = 'Leonardo da Silva Castilho'
+    sut.lastName = newlastName
+    expect(sut.lastName).toBe(newlastName)
   })
 
   it('Should change the first name with the method set firstName', () => {
