@@ -1,5 +1,5 @@
 import { EntityValidationError } from '@/shared/errors/entity-validation.error';
-import { UserValidator } from '../validators/user.validator';
+import { UserValidator, UserValidatorFactory } from '../validators/user.validator';
 
 export interface IUserEntity {
   firstName: string;
@@ -48,7 +48,8 @@ export class UserEntity {
   }
 
   static validate(data: IUserEntity) {
-    const validator = new UserValidator();
+    const validator = UserValidatorFactory.create();
+
     const isValid = validator.validate(data);
 
     if (!isValid) {

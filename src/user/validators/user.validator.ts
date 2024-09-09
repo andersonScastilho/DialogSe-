@@ -6,6 +6,7 @@ import {
     validateSync,
 } from 'class-validator';
 import { IUserEntity } from '../entities/user.entity';
+import { ClassValidatorFields } from '@/shared/validators/class-validator.fields';
 
 export class UserRules implements IUserEntity {
     @IsString()
@@ -42,24 +43,16 @@ export class UserRules implements IUserEntity {
     }
 }
 
-export class UserValidator {
-    errors: { [field: string]: string[] } = null
-    validatedData: IUserEntity = null
-    validate(data: UserRules) {
-        const errors = validateSync(new UserRules(data));
+export class UserValidator extends ClassValidatorFields<UserRules> {
+    validate(data: UserRules): boolean {
+        return super.validate(new UserRules(data ?? ({} as IUserEntity)))
+    }
+}
 
-        if (errors.length) {
-            this.errors = {}
-            for (const error of errors) {
-                const field = error.property
-                this.errors[field] = Object.values(error.constraints)
-            }
-        } else {
-            this.validatedData = data
-        }
 
-        return !errors.length
-
+export class UserValidatorFactory {
+    static create(): UserValidator {
+        return new UserValidator()
     }
 }
 
