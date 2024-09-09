@@ -39,10 +39,10 @@ export class UserEntity {
 
   }
 
-  get password() {
+  get password_hash() {
     return this.user.password;
   }
-  set password(data: string) {
+  set password_hash(data: string) {
     UserEntity.validate({ ...this.user, password: data })
     this.user.password = data;
   }

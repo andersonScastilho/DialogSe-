@@ -5,13 +5,13 @@ import { hash } from 'bcrypt';
 
 @Injectable()
 export class CreateUserUseCase {
-  constructor() {}
+  constructor() { }
 
   async create(data: CreateUserDto) {
     const entity = new UserEntity(data);
-    const passowrd_hash = await hash(entity.password, 6);
+    const passowrd_hash = await hash(entity.password_hash, 6);
 
-    entity.password = passowrd_hash;
+    entity.password_hash = passowrd_hash;
 
     return entity;
   }

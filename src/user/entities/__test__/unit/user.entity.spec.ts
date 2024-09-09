@@ -37,8 +37,8 @@ describe('Entity User', () => {
   //Testando set methods
   it('Should change the password with the method set password', () => {
     const newPassword = '123456'
-    sut.password = newPassword
-    expect(sut.password).toBe(newPassword)
+    sut.password_hash = newPassword
+    expect(sut.password_hash).toBe(newPassword)
   })
 
   it('Should change the email with the method set email', () => {
