@@ -1,58 +1,62 @@
 import {
-    IsDateString,
-    IsEmail,
-    IsOptional,
-    IsString,
-    validateSync,
+  IsDateString,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsStrongPassword,
+  validateSync,
 } from 'class-validator';
 import { IUserEntity } from '../entities/user.entity';
 import { ClassValidatorFields } from '@/shared/validators/class-validator.fields';
 
 export class UserRules implements IUserEntity {
-    @IsString()
-    firstName: string;
+  @IsString()
+  @IsNotEmpty()
+  firstName: string;
 
-    @IsString()
-    lastName: string;
+  @IsString()
+  @IsNotEmpty()
+  lastName: string;
 
-    @IsString()
-    @IsEmail()
-    email: string;
+  @IsString()
+  @IsEmail()
+  email: string;
 
-    @IsString()
-    password: string;
+  @IsString()
+  @IsNotEmpty()
+  @IsStrongPassword()
+  password: string;
 
-    @IsDateString()
-    @IsOptional()
-    created_at?: Date;
+  @IsDateString()
+  @IsOptional()
+  created_at?: Date;
 
-    constructor({
-        email,
-        firstName,
-        lastName,
-        created_at,
-        password
-    }: IUserEntity) {
-        Object.assign(this, {
-            created_at,
-            email,
-            firstName,
-            lastName,
-            password
-        });
-    }
+  constructor({
+    email,
+    firstName,
+    lastName,
+    created_at,
+    password,
+  }: IUserEntity) {
+    Object.assign(this, {
+      created_at,
+      email,
+      firstName,
+      lastName,
+      password,
+    });
+  }
 }
 
 export class UserValidator extends ClassValidatorFields<UserRules> {
-    validate(data: UserRules): boolean {
-        return super.validate(new UserRules(data ?? ({} as IUserEntity)))
-    }
+  validate(data: UserRules): boolean {
+    return super.validate(new UserRules(data ?? ({} as IUserEntity)));
+  }
 }
-
 
 export class UserValidatorFactory {
-    static create(): UserValidator {
-        return new UserValidator()
-    }
+  static create(): UserValidator {
+    return new UserValidator();
+  }
 }
-
