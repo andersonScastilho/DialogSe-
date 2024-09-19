@@ -7,7 +7,9 @@ describe('Entity User', () => {
   let props: IUserEntity
 
   beforeEach(() => {
-    props = UserDataBuilder({})
+    props = UserDataBuilder({
+      password: 'Teste123@'
+    })
     sut = new UserEntity(props)
   })
 
@@ -36,8 +38,10 @@ describe('Entity User', () => {
 
   //Testando set methods
   it('Should change the password with the method set password', () => {
-    const newPassword = '123456'
+    const newPassword = 'Testeaaaa123@'
+
     sut.password_hash = newPassword
+
     expect(sut.password_hash).toBe(newPassword)
   })
 

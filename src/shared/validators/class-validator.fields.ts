@@ -13,6 +13,7 @@ export abstract class ClassValidatorFields<PropsValidated> implements ValidatorF
                 const field = error.property
                 this.errors[field] = Object.values(error.constraints)
             }
+
         } else {
             this.validatedData = data
         }
