@@ -1,10 +1,11 @@
 import { IUserEntity } from '@/user/entities/user.entity';
 import { IUserRepository } from '../user.repository';
+import { ConflictValidationError } from '@/shared/errors/conflict-validation.error';
 
 export class UserInMemoryDatabase implements IUserRepository {
   users: IUserEntity[] = [];
 
-  constructor() {}
+  constructor() { }
 
   async create(input: IUserEntity) {
     this.users.push({ ...input });
@@ -26,7 +27,7 @@ export class UserInMemoryDatabase implements IUserRepository {
     const alreadyExists = this.users.some((user) => user.email === input);
 
     if (alreadyExists) {
-      throw new Error('Email in use!');
+      throw new ConflictValidationError('Email already exists!')
     }
 
     return;

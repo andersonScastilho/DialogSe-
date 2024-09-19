@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { EntityValidationErrorFilter } from './shared/exeption-filter/entity-validation-error.filter';
+import { ConflictValidationFilter } from './shared/exeption-filter/conflict-validation-error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +15,9 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalFilters(new EntityValidationErrorFilter());
+  app.useGlobalFilters(
+    new EntityValidationErrorFilter(),
+    new ConflictValidationFilter());
 
   await app.listen(3000);
 }
