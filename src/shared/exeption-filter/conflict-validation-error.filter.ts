@@ -8,8 +8,6 @@ export class ConflictValidationFilter implements ExceptionFilter {
         const ctx = host.switchToHttp()
         const response = ctx.getResponse()
 
-        console.log(exception)
-
         response.status(409).send({
             statusCode: 409,
             error: 'Conflcit Validation Error',
