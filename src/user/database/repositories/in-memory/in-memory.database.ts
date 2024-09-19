@@ -6,8 +6,28 @@ export class UserInMemoryDatabase implements IUserRepository {
 
   constructor() {}
 
-  async create(input: IUserEntity): Promise<void> {
+  async create(input: IUserEntity) {
     this.users.push({ ...input });
+
+    return;
+  }
+
+  async findByEmail(input: string) {
+    const [user] = this.users.filter((user) => user.email === input);
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    return user;
+  }
+
+  async emailAlreadyExists(input: string) {
+    const alreadyExists = this.users.some((user) => user.email === input);
+
+    if (alreadyExists) {
+      throw new Error('Email in use!');
+    }
 
     return;
   }
