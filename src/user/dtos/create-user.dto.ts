@@ -4,6 +4,7 @@ import {
     IsEmail,
     IsOptional,
     IsString,
+    IsStrongPassword,
 } from 'class-validator';
 
 export class CreateUserDto implements IUserEntity {
@@ -18,5 +19,6 @@ export class CreateUserDto implements IUserEntity {
     email: string;
 
     @IsString()
+    @IsStrongPassword()
     password: string;
 }
