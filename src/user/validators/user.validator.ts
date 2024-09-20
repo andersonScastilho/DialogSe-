@@ -4,8 +4,6 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsStrongPassword,
-  validateSync,
 } from 'class-validator';
 import { IUserEntity } from '../entities/user.entity';
 import { ClassValidatorFields } from '@/shared/validators/class-validator.fields';
@@ -25,7 +23,6 @@ export class UserRules implements IUserEntity {
 
   @IsString()
   @IsNotEmpty()
-  @IsStrongPassword()
   password: string;
 
   @IsDateString()
