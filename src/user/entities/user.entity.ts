@@ -1,5 +1,6 @@
 import { EntityValidationError } from '@/shared/errors/entity-validation.error';
-import { UserValidator, UserValidatorFactory } from '../validators/user.validator';
+import { UserValidatorFactory } from '../validators/user.validator';
+import { v4 as uuid } from 'uuid'
 
 export interface IUserEntity {
   firstName: string;
@@ -10,10 +11,14 @@ export interface IUserEntity {
 }
 
 export class UserEntity {
-  constructor(private readonly user: IUserEntity) {
+  constructor(private readonly user: IUserEntity, private readonly id?: string) {
     UserEntity.validate(user);
+    this.id = id ?? uuid()
   }
 
+  get userId() {
+    return this.id
+  }
   get firstName() {
     return this.user.firstName;
   }
@@ -58,6 +63,6 @@ export class UserEntity {
   }
 
   toJson() {
-    return this.user;
+    return { ...this.user, userId: this.id };
   }
 }

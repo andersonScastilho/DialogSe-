@@ -11,7 +11,7 @@ export class CreateUserUseCase {
     public readonly BcryptPasswordHashProvider: IHashProvider,
     @Inject('UserRepository')
     private readonly userRepository: IUserRepository,
-  ) {}
+  ) { }
 
   async create(data: CreateUserDto) {
     //Verificar se o email esta sendo utilizado
