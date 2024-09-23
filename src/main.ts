@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { EntityValidationErrorFilter } from './shared/exeption-filter/entity-validation-error.filter';
-import { ConflictValidationFilter } from './shared/exeption-filter/conflict-validation-error.filter';
+import { ConflictFilter } from './shared/exeption-filter/conflict-error.filter';
 import { NotFoundErrorFilter } from './shared/exeption-filter/not-found-error.filter';
 
 async function bootstrap() {
@@ -18,7 +18,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(
     new EntityValidationErrorFilter(),
-    new ConflictValidationFilter(),
+    new ConflictFilter(),
     new NotFoundErrorFilter()
   );
 

@@ -1,6 +1,6 @@
 import { IUserEntity } from '@/user/entities/user.entity';
 import { IUserRepository } from '../user.repository';
-import { ConflictError } from '@/shared/errors/conflict-validation.error';
+import { ConflictError } from '@/shared/errors/conflict.error';
 
 export class UserInMemoryDatabase implements IUserRepository {
   users: IUserEntity[] = [];

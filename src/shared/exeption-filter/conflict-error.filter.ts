@@ -1,9 +1,9 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
-import { ConflictError } from "../errors/conflict-validation.error";
+import { ConflictError } from "../errors/conflict.error";
 
 
 @Catch(ConflictError)
-export class ConflictValidationFilter implements ExceptionFilter {
+export class ConflictFilter implements ExceptionFilter {
     catch(exception: ConflictError, host: ArgumentsHost) {
         const ctx = host.switchToHttp()
         const response = ctx.getResponse()
