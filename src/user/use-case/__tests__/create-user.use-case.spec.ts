@@ -5,7 +5,7 @@ import { UserDataBuilder } from '@/user/__tests__/helpers/user-data-builder';
 import { UserEntity } from '@/user/entities/user.entity';
 import { BcryptPasswordHashProvider } from '@/user/providers/bcrypt-password-hash-provider';
 import { UserInMemoryDatabase } from '@/user/database/repositories/in-memory/in-memory.database';
-import { ConflictValidationError } from '@/shared/errors/conflict-validation.error';
+import { ConflictError } from '@/shared/errors/conflict-validation.error';
 
 describe('Create User Use Case', () => {
     let sut: CreateUserUseCase
@@ -47,7 +47,7 @@ describe('Create User Use Case', () => {
             firstName: 'Doe',
             lastName: 'John',
             password: 'ForcePassword123@'
-        })).rejects.toBeInstanceOf(ConflictValidationError)
+        })).rejects.toBeInstanceOf(ConflictError)
     })
 
 })
