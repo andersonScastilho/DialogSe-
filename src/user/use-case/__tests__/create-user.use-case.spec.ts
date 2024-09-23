@@ -5,6 +5,7 @@ import { UserDataBuilder } from '@/user/__tests__/helpers/user-data-builder';
 import { UserEntity } from '@/user/entities/user.entity';
 import { BcryptPasswordHashProvider } from '@/user/providers/bcrypt-password-hash-provider';
 import { UserInMemoryDatabase } from '@/user/database/repositories/in-memory/in-memory.database';
+import { ConflictValidationError } from '@/shared/errors/conflict-validation.error';
 
 describe('Create User Use Case', () => {
     let sut: CreateUserUseCase
@@ -22,13 +23,31 @@ describe('Create User Use Case', () => {
         }).compile()
 
         sut = module.get<CreateUserUseCase>(CreateUserUseCase)
+
+        await sut.create({
+            email: 'JohnDoe@gmail.com',
+            firstName: 'John',
+            lastName: 'Doe',
+            password: 'Teste123@gmail.com'
+        })
+
     })
 
-    it('Deveria ser possivel criar um usuario', async () => {
+    it('It should be possible to create a user', async () => {
         const user = await sut.create(UserDataBuilder({
             password: 'Teste123@'
         }))
-        console.log(user)
+
         expect(user).toBeInstanceOf(UserEntity)
     })
+
+    it('It is not possible to create a user, as the email is already being used', async () => {
+        expect(async () => await sut.create({
+            email: 'JohnDoe@gmail.com',
+            firstName: 'Doe',
+            lastName: 'John',
+            password: 'ForcePassword123@'
+        })).rejects.toBeInstanceOf(ConflictValidationError)
+    })
+
 })
