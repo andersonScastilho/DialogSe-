@@ -3,12 +3,14 @@ import { CreateUserUseCase } from './use-case/create-user.use-case';
 import { UserController } from './user-controller';
 import { BcryptPasswordHashProvider } from './providers/bcrypt-password-hash-provider';
 import { UserInMemoryDatabase } from './database/repositories/in-memory/in-memory.database';
+import { ShowUserUseCase } from './use-case/show-user.use-case';
 
 @Module({
   imports: [],
   controllers: [UserController],
   providers: [
     CreateUserUseCase,
+    ShowUserUseCase,
     {
       provide: 'HashProvider',
       useClass: BcryptPasswordHashProvider,

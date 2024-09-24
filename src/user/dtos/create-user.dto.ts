@@ -1,24 +1,17 @@
-import { IUserEntity } from "../entities/user.entity";
-import {
-    IsDateString,
-    IsEmail,
-    IsOptional,
-    IsString,
-    IsStrongPassword,
-} from 'class-validator';
+import { IsEmail, IsString, IsStrongPassword } from 'class-validator';
 
-export class CreateUserDto implements IUserEntity {
-    @IsString()
-    firstName: string;
+export class CreateUserDto {
+  @IsString()
+  firstName: string;
 
-    @IsString()
-    lastName: string;
+  @IsString()
+  lastName: string;
 
-    @IsString()
-    @IsEmail()
-    email: string;
+  @IsString()
+  @IsEmail()
+  email: string;
 
-    @IsString()
-    @IsStrongPassword()
-    password: string;
+  @IsString()
+  @IsStrongPassword()
+  password: string;
 }
