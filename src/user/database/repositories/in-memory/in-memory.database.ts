@@ -1,11 +1,22 @@
-import { IUserEntity } from '@/user/entities/user.entity';
+import { IUserEntity, UserEntity } from '@/user/entities/user.entity';
 import { IUserRepository } from '../user.repository';
 import { ConflictError } from '@/shared/errors/conflict.error';
+import { NotFoundError } from '@/shared/errors/not-found.error';
 
 export class UserInMemoryDatabase implements IUserRepository {
   users: IUserEntity[] = [];
 
-  constructor() { }
+  constructor() {}
+
+  async findById(input: string) {
+    const [user] = this.users.filter((user) => user.id === input);
+
+    if (!user) {
+      throw new NotFoundError('User Not found!');
+    }
+
+    return { ...user };
+  }
 
   async create(input: IUserEntity) {
     this.users.push({ ...input });
@@ -17,17 +28,17 @@ export class UserInMemoryDatabase implements IUserRepository {
     const [user] = this.users.filter((user) => user.email === input);
 
     if (!user) {
-      throw new Error('User not found!');
+      throw new NotFoundError('User not found!');
     }
 
-    return user;
+    return { ...user };
   }
 
   async emailAlreadyExists(input: string) {
     const alreadyExists = this.users.some((user) => user.email === input);
 
     if (alreadyExists) {
-      throw new ConflictError('Email already exists!')
+      throw new ConflictError('Email already exists!');
     }
 
     return;

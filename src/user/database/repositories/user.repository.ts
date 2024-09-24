@@ -4,4 +4,5 @@ export interface IUserRepository {
   create(input: IUserEntity): Promise<void>;
   emailAlreadyExists(input: string): Promise<void>;
   findByEmail(input: string): Promise<IUserEntity | null>;
+  findById(input: string): Promise<IUserEntity | null>;
 }
