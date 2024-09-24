@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 import { IUserEntity } from '../entities/user.entity';
 import { ClassValidatorFields } from '@/shared/validators/class-validator.fields';
@@ -12,6 +13,11 @@ export class UserRules implements IUserEntity {
   @IsString()
   @IsNotEmpty()
   firstName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  id: string;
 
   @IsString()
   @IsNotEmpty()
@@ -35,6 +41,7 @@ export class UserRules implements IUserEntity {
     lastName,
     created_at,
     password,
+    id,
   }: IUserEntity) {
     Object.assign(this, {
       created_at,
@@ -42,6 +49,7 @@ export class UserRules implements IUserEntity {
       firstName,
       lastName,
       password,
+      id,
     });
   }
 }
