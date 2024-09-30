@@ -1,36 +1,27 @@
-import { IUserRepository } from "@/user/database/repositories/user.repository";
-import { JwtService } from "@nestjs/jwt";
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 export interface IPayloadJwtToken {
-    sub: string,
-    username: string
+  sub: string;
 }
 
+@Injectable()
+export class AuthService {
+  constructor(private readonly jwtService: JwtService) {}
+  async generateTokenJwt(userId: string) {
+    const payload: IPayloadJwtToken = {
+      sub: userId,
+    };
 
-export class AuthServiceJwt {
+    const acessToken = this.jwtService.sign(payload);
 
-    constructor(private readonly jwtService: JwtService, private readonly userRepository: IUserRepository) { }
-    async generateTokenJwt(userId: string) {
+    return { acessToken };
+  }
 
-        const user = await this.userRepository.findById(userId)
+  async verifyTokenJwt(acessToken: string) {
+    const acessTokenPayload: IPayloadJwtToken =
+      await this.jwtService.verify(acessToken);
 
-        const payload: IPayloadJwtToken = {
-            sub: user.id,
-            username: `${user.firstName}`
-        }
-
-        const acessToken = this.jwtService.sign(payload)
-
-        return { acessToken }
-    }
-
-    async verifyTokenJwt(acessToken: string) {
-
-        const acessTokenPayload: IPayloadJwtToken = await this.jwtService.verify(acessToken)
-
-
-        return { acessTokenPayload }
-
-    }
-
+    return { acessTokenPayload };
+  }
 }

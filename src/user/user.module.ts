@@ -4,9 +4,10 @@ import { UserController } from './user-controller';
 import { BcryptPasswordHashProvider } from './providers/bcrypt-password-hash-provider';
 import { UserInMemoryDatabase } from './database/repositories/in-memory/in-memory.database';
 import { ShowUserUseCase } from './use-case/show-user.use-case';
+import { AuthModule } from '@/auth/auth.module';
 
 @Module({
-  imports: [],
+  imports: [AuthModule],
   controllers: [UserController],
   providers: [
     CreateUserUseCase,
