@@ -5,6 +5,7 @@ import { EntityValidationErrorFilter } from './shared/exeption-filter/entity-val
 import { ConflictFilter } from './shared/exeption-filter/conflict-error.filter';
 import { NotFoundErrorFilter } from './shared/exeption-filter/not-found-error.filter';
 import { BadRequestErrorFilter } from './shared/exeption-filter/bad-request-error.filter';
+import { UnauthorizedFilter } from './shared/exeption-filter/unauthorize-error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +23,7 @@ async function bootstrap() {
     new ConflictFilter(),
     new NotFoundErrorFilter(),
     new BadRequestErrorFilter(),
+    new UnauthorizedFilter()
   );
 
   await app.listen(3000);

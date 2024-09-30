@@ -7,12 +7,12 @@ import { AuthService } from './auth.service';
     JwtModule.registerAsync({
       useFactory: async () => ({
         global: true,
-        secret: '',
-        signOptions: { expiresIn: '' },
+        secret: process.env.JWTSECRET,
+        signOptions: { expiresIn: process.env.JWTAUTHEXPIRESIN },
       }),
     }),
   ],
   providers: [AuthService],
   exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }
