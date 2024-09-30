@@ -4,7 +4,15 @@ import { ConflictError } from '@/shared/errors/conflict.error';
 import { NotFoundError } from '@/shared/errors/not-found.error';
 
 export class UserInMemoryDatabase implements IUserRepository {
-  users: IUserEntity[] = [];
+  users: IUserEntity[] = [
+    {
+      email: 'jonhdoe@gmail.com',
+      firstName: 'Jonh',
+      lastName: 'Doe',
+      id: 'c2ab5a04-88e6-4880-9e40-d4f7ec7dce9e',
+      password: '12345678',
+    },
+  ];
 
   constructor() {}
 
