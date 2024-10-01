@@ -4,13 +4,16 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { OutputUserDto } from './dtos/output-user.dto';
 import { ShowUserDto } from './dtos/show-user.dto';
 import { ShowUserUseCase } from './use-case/show-user.use-case';
+import { SignInUserDto } from './dtos/sign-in-user.dto';
+import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly showUserUseCase: ShowUserUseCase,
-  ) {}
+    private readonly signInUserUseCase: SignInUserUseCase
+  ) { }
 
   @Post()
   async create(@Body() data: CreateUserDto) {
@@ -30,5 +33,15 @@ export class UserController {
     const output = OutputUserDto.output(user);
 
     return output;
+  }
+
+  @Post('sign-in')
+  async signIn(@Body() body: SignInUserDto) {
+    const { email, password } = body
+
+    const acessToken = await this.signInUserUseCase.signIn(email, password)
+
+    return acessToken
+
   }
 }

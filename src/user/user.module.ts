@@ -5,6 +5,7 @@ import { BcryptPasswordHashProvider } from './providers/bcrypt-password-hash-pro
 import { UserInMemoryDatabase } from './database/repositories/in-memory/in-memory.database';
 import { ShowUserUseCase } from './use-case/show-user.use-case';
 import { AuthModule } from '@/auth/auth.module';
+import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 
 @Module({
   imports: [AuthModule],
@@ -12,6 +13,7 @@ import { AuthModule } from '@/auth/auth.module';
   providers: [
     CreateUserUseCase,
     ShowUserUseCase,
+    SignInUserUseCase,
     {
       provide: 'HashProvider',
       useClass: BcryptPasswordHashProvider,
@@ -22,4 +24,4 @@ import { AuthModule } from '@/auth/auth.module';
     },
   ],
 })
-export class UserModule {}
+export class UserModule { }
