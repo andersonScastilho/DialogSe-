@@ -12,7 +12,7 @@ export class CreateUserUseCase {
     public readonly BcryptPasswordHashProvider: IHashProvider,
     @Inject('UserRepository')
     private readonly userRepository: IUserRepository,
-  ) {}
+  ) { }
 
   async create(data: CreateUserDto) {
     //Verificar se o email esta sendo utilizado
@@ -21,7 +21,13 @@ export class CreateUserUseCase {
     //Gerando id do usuario
     const generatedUserId = uuidV4();
 
-    const entity = new UserEntity({ ...data, id: generatedUserId });
+    const entity = new UserEntity({
+      email: data.email,
+      firstName: data.firstName,
+      id: generatedUserId,
+      lastName: data.lastName,
+      password_hash: data.password
+    });
 
     //Esta hasheando a senha
     const passowrd_hash = await this.BcryptPasswordHashProvider.hash(

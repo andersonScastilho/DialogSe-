@@ -29,7 +29,7 @@ export class UserRules implements IUserEntity {
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password_hash: string;
 
   @IsDateString()
   @IsOptional()
@@ -40,7 +40,7 @@ export class UserRules implements IUserEntity {
     firstName,
     lastName,
     created_at,
-    password,
+    password_hash,
     id,
   }: IUserEntity) {
     Object.assign(this, {
@@ -48,7 +48,7 @@ export class UserRules implements IUserEntity {
       email,
       firstName,
       lastName,
-      password,
+      password_hash,
       id,
     });
   }

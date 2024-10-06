@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserUseCase } from '../create-user.use-case';
 import { UserDataBuilder } from '@/user/__tests__/helpers/user-data-builder';
 import { UserEntity } from '@/user/entities/user.entity';
-import { BcryptPasswordHashProvider } from '@/user/providers/bcrypt-password-hash-provider';
+import { BcryptPasswordHashProvider } from '@/user/providers/bcrypt-password_hash-hash-provider';
 import { UserInMemoryDatabase } from '@/user/database/repositories/in-memory/in-memory.database';
 import { ConflictError } from '@/shared/errors/conflict.error';
 
@@ -28,14 +28,14 @@ describe('Create User Use Case', () => {
             email: 'JohnDoe@gmail.com',
             firstName: 'John',
             lastName: 'Doe',
-            password: 'Teste123@gmail.com'
+            password_hash: 'Teste123@gmail.com'
         })
 
     })
 
     it('It should be possible to create a user', async () => {
         const user = await sut.create(UserDataBuilder({
-            password: 'Teste123@'
+            password_hash: 'Teste123@'
         }))
 
         expect(user).toBeInstanceOf(UserEntity)
@@ -46,7 +46,7 @@ describe('Create User Use Case', () => {
             email: 'JohnDoe@gmail.com',
             firstName: 'Doe',
             lastName: 'John',
-            password: 'ForcePassword123@'
+            password_hash: 'ForcePassword123@'
         })).rejects.toBeInstanceOf(ConflictError)
     })
 

@@ -6,7 +6,7 @@ export interface IUserEntity {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
+  password_hash: string;
   created_at?: Date;
 }
 
@@ -44,11 +44,11 @@ export class UserEntity {
   }
 
   get password_hash() {
-    return this.user.password;
+    return this.user.password_hash;
   }
   set password_hash(data: string) {
-    UserEntity.validate({ ...this.user, password: data });
-    this.user.password = data;
+    UserEntity.validate({ ...this.user, password_hash: data });
+    this.user.password_hash = data;
   }
 
   static validate(data: IUserEntity) {

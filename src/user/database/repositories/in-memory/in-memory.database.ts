@@ -10,11 +10,11 @@ export class UserInMemoryDatabase implements IUserRepository {
       firstName: 'Jonh',
       lastName: 'Doe',
       id: 'c2ab5a04-88e6-4880-9e40-d4f7ec7dce9e',
-      password: '12345678',
+      password_hash: '12345678',
     },
   ];
 
-  constructor() {}
+  constructor() { }
 
   async findById(input: string) {
     const [user] = this.users.filter((user) => user.id === input);

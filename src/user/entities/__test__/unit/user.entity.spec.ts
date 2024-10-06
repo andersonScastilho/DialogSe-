@@ -8,7 +8,7 @@ describe('Entity User', () => {
 
   beforeEach(() => {
     props = UserDataBuilder({
-      password: 'Teste123@'
+      password_hash: 'Teste123@'
     })
     sut = new UserEntity(props)
   })
@@ -37,7 +37,7 @@ describe('Entity User', () => {
 
 
   //Testando set methods
-  it('Should change the password with the method set password', () => {
+  it('Should change the password_hash with the method set password_hash', () => {
     const newPassword = 'Testeaaaa123@'
 
     sut.password_hash = newPassword

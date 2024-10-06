@@ -12,10 +12,10 @@ export class SignInUserUseCase {
         private readonly userRepository: IUserRepository,
         private readonly authService: AuthService) { }
 
-    async signIn(email: string, password: string) {
+    async signIn(email: string, password_hash: string) {
         const user = await this.userRepository.findByEmail(email)
 
-        const passwordIsMatch = await this.hashProvider.compare(password, user.password)
+        const passwordIsMatch = await this.hashProvider.compare(password_hash, user.password_hash)
 
         if (!passwordIsMatch) {
             throw new UnauthorizedError('Email ou senha incorreto.')
