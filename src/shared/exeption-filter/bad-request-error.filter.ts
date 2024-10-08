@@ -5,7 +5,7 @@ import { BadRequestError } from '../errors/bad-request.error';
 export class BadRequestErrorFilter implements ExceptionFilter {
   catch(exception: BadRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getRequest();
+    const response = ctx.getResponse();
 
     response.status(400).send({
       statusCode: 400,
