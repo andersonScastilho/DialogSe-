@@ -1,15 +1,13 @@
 import { EntityValidationError } from "@/shared/errors/entity-validation.error";
 import { IUserEntity, UserEntity } from "../../user.entity";
-import { UserDataBuilder } from "../../../__tests__/helpers/user-data-builder";
+import { UserEntityDataBuilder } from "../../../__tests__/helpers/user-data-builder";
 
 describe('Entity User', () => {
   let sut: UserEntity
   let props: IUserEntity
 
   beforeEach(() => {
-    props = UserDataBuilder({
-      password_hash: 'Teste123@'
-    })
+    props = UserEntityDataBuilder({})
     sut = new UserEntity(props)
   })
 
@@ -18,23 +16,22 @@ describe('Entity User', () => {
   });
 
   it('There should be an error in the first name', () => {
-    expect(() => new UserEntity(UserDataBuilder({
+    expect(() => new UserEntity(UserEntityDataBuilder({
       firstName: 15 as any
     }))).toThrow(EntityValidationError)
   });
 
   it('There should be an error in the lastName', () => {
-    expect(() => new UserEntity(UserDataBuilder({
+    expect(() => new UserEntity(UserEntityDataBuilder({
       lastName: 15 as any,
     }))).toThrow(EntityValidationError)
   });
 
   it('There should be an error in the email', () => {
-    expect(() => new UserEntity(UserDataBuilder({
+    expect(() => new UserEntity(UserEntityDataBuilder({
       email: 15 as any,
     }))).toThrow(EntityValidationError)
   });
-
 
   //Testando set methods
   it('Should change the password_hash with the method set password_hash', () => {
@@ -62,6 +59,5 @@ describe('Entity User', () => {
     sut.firstName = newFirstName
     expect(sut.firstName).toBe(newFirstName)
   })
-
 
 });

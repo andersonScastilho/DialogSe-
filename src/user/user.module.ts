@@ -6,6 +6,7 @@ import { ShowUserUseCase } from './use-case/show-user.use-case';
 import { AuthModule } from '@/auth/auth.module';
 import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 import { BcryptPasswordHashProvider } from './providers/bcrypt-password-hash-provider';
+import { SearchUserUseCase } from './use-case/search-user.user-case';
 
 @Module({
   imports: [AuthModule],
@@ -14,6 +15,7 @@ import { BcryptPasswordHashProvider } from './providers/bcrypt-password-hash-pro
     CreateUserUseCase,
     ShowUserUseCase,
     SignInUserUseCase,
+    SearchUserUseCase,
     {
       provide: 'HashProvider',
       useClass: BcryptPasswordHashProvider,

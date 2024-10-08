@@ -2,6 +2,7 @@ import { IUserEntity, UserEntity } from '@/user/entities/user.entity';
 import { IUserRepository } from '../user.repository';
 import { ConflictError } from '@/shared/errors/conflict.error';
 import { NotFoundError } from '@/shared/errors/not-found.error';
+import { SearchParams } from '@/user/use-case/search-user.user-case';
 
 export class UserInMemoryDatabase implements IUserRepository {
   users: IUserEntity[] = [
@@ -50,5 +51,20 @@ export class UserInMemoryDatabase implements IUserRepository {
     }
 
     return;
+  }
+
+  async search(searchParams: SearchParams): Promise<IUserEntity[] | null> {
+
+    if (!searchParams.filter && !searchParams.sort) {
+      return this.users.slice(0, 10)
+    }
+
+    const selected = this.users.filter((user) => {
+      const result = user[searchParams.sort] === searchParams.filter
+
+      return result
+    })
+
+    return selected
   }
 }
