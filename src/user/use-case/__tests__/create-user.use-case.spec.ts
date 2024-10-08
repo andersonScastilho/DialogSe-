@@ -35,7 +35,9 @@ describe('Create User Use Case', () => {
     })
 
     it('It is not possible to create a user, as the email is already being used', async () => {
-        expect(async () => await sut.create(UserDataBuilder({}))).rejects.toBeInstanceOf(ConflictError)
+        expect(async () => await sut.create(UserDataBuilder({
+            email: 'jonhdoe@gmail.com'
+        }))).rejects.toBeInstanceOf(ConflictError)
     })
 
 })
