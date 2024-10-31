@@ -1,6 +1,6 @@
-import { ConversationEntity } from "../entities/conversation.entity"
+import { ConversationEntity, IConversationEntity } from "../entities/conversation.entity"
 
 export interface IConversationRepository {
     create(conversation: ConversationEntity): Promise<void>
-    findByParticipants(participant1Id: string, participant2Id: string): Promise<any | null>
+    findByParticipants(participant1Id: string, participant2Id: string): Promise<IConversationEntity | null>
 }

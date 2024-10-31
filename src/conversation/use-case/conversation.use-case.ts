@@ -9,10 +9,9 @@ export class Conversation {
     constructor(private readonly conversationRepository: IConversationRepository, private readonly messageRepositroy: IMessageRepository) { }
 
     async create(message: SendMessageDto) {
-        const isExists = await this.conversationRepository.findByParticipants(message.sender, message.receiver)
+        const conversation = await this.conversationRepository.findByParticipants(message.sender, message.receiver)
 
-        if (!isExists) {
-
+        if (!conversation) {
             const conversationEntity = new ConversationEntity({
                 participant1Id: message.sender,
                 participant2Id: message.receiver,
@@ -20,18 +19,17 @@ export class Conversation {
             })
 
             await this.conversationRepository.create(conversationEntity)
+
+            return
         }
 
-        const messageId = uuidV4()
-
-        const messageEntity = new MessageEntity({
+        const messageToSend = new MessageEntity({
             content: message.content,
             receiver: message.receiver,
             sender: message.sender,
-            sentAt: new Date(),
-            id: messageId
+            id: uuidV4(),
         })
 
-        await this.messageRepositroy.create(messageEntity)
+        await this.messageRepositroy.create(messageToSend.toJson())
     }
 }

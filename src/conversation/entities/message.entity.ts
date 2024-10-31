@@ -2,12 +2,12 @@ export interface IMessage {
   sender: string;
   receiver: string;
   content: string;
-  sentAt: Date;
+  sentAt?: Date;
   id: string;
 }
 
 export class MessageEntity {
-  constructor(private readonly message: IMessage) {}
+  constructor(private readonly message: IMessage) { }
 
   get sender() {
     return this.message.sender;
