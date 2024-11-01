@@ -1,15 +1,28 @@
-import { ConversationEntity, IConversationEntity } from "@/conversation/entities/conversation.entity";
-import { IConversationRepository } from "../conversation.repository";
+import {
+  ConversationEntity,
+  IConversationEntity,
+} from '@/conversation/entities/conversation.entity';
+import { IConversationRepository } from '../conversation.repository';
 
 export class ConversationInMemoryDatabase implements IConversationRepository {
-    conversation: IConversationEntity[] = []
+  conversation: IConversationEntity[] = [];
 
-    create(conversation: ConversationEntity): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
+  async create(conversation: ConversationEntity): Promise<void> {
+    await this.conversation.push(conversation);
+    return;
+  }
 
-    findByParticipants(participant1Id: string, participant2Id: string): Promise<any | null> {
-        throw new Error("Method not implemented.");
-    }
+  async findByParticipants(
+    participant1Id: string,
+    participant2Id: string,
+  ): Promise<any | null> {
+    const [conversation] = this.conversation.filter((conversation) => {
+      return (
+        conversation.participant1Id === participant1Id &&
+        conversation.participant2Id === participant2Id
+      );
+    });
 
+    return conversation;
+  }
 }
