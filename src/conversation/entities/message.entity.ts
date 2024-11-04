@@ -1,4 +1,4 @@
-export interface IMessage {
+export interface IMessageEntity {
   sender: string;
   receiver: string;
   content: string;
@@ -7,7 +7,7 @@ export interface IMessage {
 }
 
 export class MessageEntity {
-  constructor(private readonly message: IMessage) { }
+  constructor(private readonly message: IMessageEntity) { }
 
   get sender() {
     return this.message.sender;

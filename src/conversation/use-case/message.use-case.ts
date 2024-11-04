@@ -4,11 +4,14 @@ import { IMessageRepository } from "../database/message.repository";
 import { MessageEntity } from "../entities/message.entity";
 import { v4 as uuidV4 } from 'uuid';
 import { ConversationEntity } from "../entities/conversation.entity";
+import { Inject } from "@nestjs/common";
 
-export class Conversation {
-    constructor(private readonly conversationRepository: IConversationRepository, private readonly messageRepositroy: IMessageRepository) { }
+export class MessageUseCase {
+    constructor(
+        @Inject('ConversationRepository') private readonly conversationRepository: IConversationRepository,
+        @Inject(`MessageRepository`) private readonly messageRepository: IMessageRepository) { }
 
-    async create(message: SendMessageDto) {
+    async send(message: SendMessageDto) {
         const conversation = await this.conversationRepository.findByParticipants(message.sender, message.receiver)
 
         if (!conversation) {
@@ -30,6 +33,9 @@ export class Conversation {
             id: uuidV4(),
         })
 
-        await this.messageRepositroy.create(messageToSend.toJson())
+        await this.messageRepository.create(messageToSend.toJson())
+
+        console.log(this.messageRepository.messages)
+        console.log(this.conversationRepository.conversation)
     }
 }
