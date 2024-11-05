@@ -8,22 +8,19 @@ export class CryptoEncryptDecrypt {
 
     const content = contentToEncrypt;
     const cipher = createCipheriv(alg, Buffer.from(secretKey), iv);
-    const encrypted = Buffer.concat([cipher.update(content), cipher.final()]);
+    const encrypted = cipher.update(content, 'utf-8', 'hex')
 
     return { encrypted, iv };
   }
 
-  decrypt(encrypted: NodeJS.ArrayBufferView, iv: Buffer) {
+  decrypt(encrypted: string, iv: Buffer) {
     const decipher = createDecipheriv(
       process.env.ALGORITHM,
       Buffer.from(process.env.SECRET_KEY),
       iv,
     );
 
-    const decrypted = Buffer.concat([
-      decipher.update(encrypted),
-      decipher.final(),
-    ]);
+    const decrypted = decipher.update(encrypted, 'hex', 'utf-8')
 
     return decrypted;
   }
