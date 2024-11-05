@@ -7,7 +7,11 @@ export interface IMessageEntity {
 }
 
 export class MessageEntity {
-  constructor(private readonly message: IMessageEntity) { }
+  constructor(private readonly message: IMessageEntity) {}
+
+  set content(value: string) {
+    this.message.content = value;
+  }
 
   get sender() {
     return this.message.sender;
