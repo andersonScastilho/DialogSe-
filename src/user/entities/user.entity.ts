@@ -7,7 +7,7 @@ export interface IUserEntity {
   lastName: string;
   email: string;
   password_hash: string;
-  created_at?: Date;
+  createdAt?: Date;
 }
 
 export class UserEntity {

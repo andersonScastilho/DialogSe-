@@ -33,18 +33,18 @@ export class UserRules implements IUserEntity {
 
   @IsDateString()
   @IsOptional()
-  created_at?: Date;
+  createdAt?: Date;
 
   constructor({
     email,
     firstName,
     lastName,
-    created_at,
+    createdAt,
     password_hash,
     id,
   }: IUserEntity) {
     Object.assign(this, {
-      created_at,
+      createdAt,
       email,
       firstName,
       lastName,
