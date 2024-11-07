@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserEntity } from '../entities/user.entity';
 import { IHashProvider } from '@/shared/providers/hash-provider.interface';
-import { IUserRepository } from '../database/repositories/user.repository';
 import { v4 as uuidV4 } from 'uuid';
 import { ICreateUserRepository } from '../database/repositories/create-user.repository';
+import { IEmailAlreadyInUseRepository } from '../database/repositories/postgres/email-already-in-use.repository';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -13,11 +13,13 @@ export class CreateUserUseCase {
     public readonly BcryptPasswordHashProvider: IHashProvider,
     @Inject('CreateUserRepository')
     private readonly createUserRepository: ICreateUserRepository,
+    @Inject('EmailAlreadyInUseRepository')
+    private readonly emailAlreadyInUseRepository: IEmailAlreadyInUseRepository,
   ) {}
 
   async create(data: CreateUserDto) {
     // //Verificar se o email esta sendo utilizado
-    // await this.userRepository.emailAlreadyExists(data.email);
+    await this.emailAlreadyInUseRepository.execute(data.email);
 
     //Gerando id do usuario
     const generatedUserId = uuidV4();

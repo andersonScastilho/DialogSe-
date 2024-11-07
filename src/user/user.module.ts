@@ -8,6 +8,7 @@ import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 import { BcryptPasswordHashProvider } from './providers/bcrypt-password-hash-provider';
 import { SearchUserUseCase } from './use-case/search-user.user-case';
 import { PostgresCreateUserRepository } from './database/repositories/postgres/postgres-create-user.repository';
+import { PostgresEmailAlreadyInUseRepository } from './database/repositories/postgres/postgres-email-already-in-use.repository';
 
 @Module({
   imports: [AuthModule],
@@ -28,6 +29,10 @@ import { PostgresCreateUserRepository } from './database/repositories/postgres/p
     {
       provide: 'CreateUserRepository',
       useClass: PostgresCreateUserRepository,
+    },
+    {
+      provide: 'EmailAlreadyInUseRepository',
+      useClass: PostgresEmailAlreadyInUseRepository,
     },
   ],
 })
