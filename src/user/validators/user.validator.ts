@@ -1,5 +1,5 @@
 import {
-  IsDateString,
+  IsDate,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -31,7 +31,7 @@ export class UserRules implements IUserEntity {
   @IsNotEmpty()
   password_hash: string;
 
-  @IsDateString()
+  @IsDate()
   @IsOptional()
   createdAt?: Date;
 

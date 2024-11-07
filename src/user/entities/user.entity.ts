@@ -51,6 +51,10 @@ export class UserEntity {
     this.user.password_hash = data;
   }
 
+  get createdAt() {
+    return this.user.createdAt;
+  }
+
   static validate(data: IUserEntity) {
     const validator = UserValidatorFactory.create();
 
