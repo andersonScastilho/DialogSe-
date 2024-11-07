@@ -4,19 +4,20 @@ import { UserEntity } from '../entities/user.entity';
 import { IHashProvider } from '@/shared/providers/hash-provider.interface';
 import { IUserRepository } from '../database/repositories/user.repository';
 import { v4 as uuidV4 } from 'uuid';
+import { ICreateUserRepository } from '../database/repositories/create-user.repository';
 
 @Injectable()
 export class CreateUserUseCase {
   constructor(
     @Inject('HashProvider')
     public readonly BcryptPasswordHashProvider: IHashProvider,
-    @Inject('UserRepository')
-    private readonly userRepository: IUserRepository,
-  ) { }
+    @Inject('CreateUserRepository')
+    private readonly createUserRepository: ICreateUserRepository,
+  ) {}
 
   async create(data: CreateUserDto) {
-    //Verificar se o email esta sendo utilizado
-    await this.userRepository.emailAlreadyExists(data.email);
+    // //Verificar se o email esta sendo utilizado
+    // await this.userRepository.emailAlreadyExists(data.email);
 
     //Gerando id do usuario
     const generatedUserId = uuidV4();
@@ -26,7 +27,8 @@ export class CreateUserUseCase {
       firstName: data.firstName,
       id: generatedUserId,
       lastName: data.lastName,
-      password_hash: data.password
+      password_hash: data.password,
+      createdAt: new Date(),
     });
 
     //Esta hasheando a senha
@@ -38,7 +40,7 @@ export class CreateUserUseCase {
     entity.password_hash = passowrd_hash;
 
     //Esta salvando o usuario no banco de dados
-    await this.userRepository.create(entity.toJson());
+    await this.createUserRepository.execute(entity.toJson());
 
     return entity;
   }

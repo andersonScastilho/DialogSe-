@@ -7,6 +7,7 @@ import { AuthModule } from '@/auth/auth.module';
 import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 import { BcryptPasswordHashProvider } from './providers/bcrypt-password-hash-provider';
 import { SearchUserUseCase } from './use-case/search-user.user-case';
+import { PostgresCreateUserRepository } from './database/repositories/postgres/postgres-create-user.repository';
 
 @Module({
   imports: [AuthModule],
@@ -24,6 +25,10 @@ import { SearchUserUseCase } from './use-case/search-user.user-case';
       provide: 'UserRepository',
       useClass: UserInMemoryDatabase,
     },
+    {
+      provide: 'CreateUserRepository',
+      useClass: PostgresCreateUserRepository,
+    },
   ],
 })
-export class UserModule { }
+export class UserModule {}
