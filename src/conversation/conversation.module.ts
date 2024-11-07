@@ -4,6 +4,7 @@ import { MessageUseCase } from './use-case/message.use-case';
 import { MessageInMemoryDatabase } from './database/in-memory/message-in-memory.database';
 import { MessageController } from './message.controller';
 import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
+import { PostgresCreateMessageRepository } from './database/postgres/postgres-create-message.repository';
 
 @Module({
   controllers: [MessageController],
@@ -14,8 +15,8 @@ import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
       useClass: ConversationInMemoryDatabase,
     },
     {
-      provide: 'MessageRepository',
-      useClass: MessageInMemoryDatabase,
+      provide: 'CreateMessageRepository',
+      useClass: PostgresCreateMessageRepository,
     },
     {
       provide: 'EncryptDecryptProvider',
@@ -23,4 +24,4 @@ import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
     },
   ],
 })
-export class ConversationModule {}
+export class ConversationModule { }
