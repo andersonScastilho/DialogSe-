@@ -1,18 +1,18 @@
 import { BadRequestError } from '@/shared/errors/bad-request.error';
 import { UserEntity } from '../entities/user.entity';
-import { IUserRepository } from '../database/repositories/user.repository';
 import { Inject } from '@nestjs/common';
+import { IShowUserPerIdRepository } from '../database/repositories/show-user-per-id.repository';
 
 export class ShowUserUseCase {
-  @Inject('UserRepository')
-  private readonly userRepository: IUserRepository;
+  @Inject('ShowUserPerIdRepository')
+  private readonly showUserPerIdRepository: IShowUserPerIdRepository;
 
   async show(data: string) {
     if (!data) {
       throw new BadRequestError('Missing data!');
     }
 
-    const user = await this.userRepository.findById(data);
+    const user = await this.showUserPerIdRepository.execute(data);
 
     const userEntity = new UserEntity(user);
 
