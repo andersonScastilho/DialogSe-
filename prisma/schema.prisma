@@ -24,3 +24,13 @@ model User {
 
   @@map("users")
 }
+
+model Message {
+  id       String   @unique
+  sender   String
+  receiver String
+  content  String
+  sentAt   DateTime
+
+  @@map("messages")
+}
