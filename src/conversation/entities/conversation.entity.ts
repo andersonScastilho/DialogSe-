@@ -2,6 +2,7 @@ export interface IConversationEntity {
   participant1Id: string;
   participant2Id: string;
   messagesId: string[];
+  id: string
 }
 
 export class ConversationEntity {
@@ -13,6 +14,10 @@ export class ConversationEntity {
 
   get participant2Id() {
     return this.conversation.participant2Id;
+  }
+
+  get id() {
+    return this.conversation.id
   }
 
   get messagesId() {

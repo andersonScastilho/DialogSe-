@@ -32,5 +32,16 @@ model Message {
   content  String
   sentAt   DateTime
 
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId String
+
   @@map("messages")
+}
+
+model Conversation {
+  id             String @unique
+  participant1Id String
+  participant2Id String
+
+  messagesId Message[]
 }

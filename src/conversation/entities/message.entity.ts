@@ -3,11 +3,12 @@ export interface IMessageEntity {
   receiver: string;
   content: string;
   sentAt?: Date;
+  conversationId: string
   id: string;
 }
 
 export class MessageEntity {
-  constructor(private readonly message: IMessageEntity) {}
+  constructor(private readonly message: IMessageEntity) { }
 
   set content(value: string) {
     this.message.content = value;
@@ -16,7 +17,9 @@ export class MessageEntity {
   get sender() {
     return this.message.sender;
   }
-
+  get conversationId() {
+    return this.message.conversationId
+  }
   get receiver() {
     return this.message.receiver;
   }
