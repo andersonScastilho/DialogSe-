@@ -10,6 +10,7 @@ import { SearchUserUseCase } from './use-case/search-user.user-case';
 import { PostgresCreateUserRepository } from './database/repositories/postgres/postgres-create-user.repository';
 import { PostgresEmailAlreadyInUseRepository } from './database/repositories/postgres/postgres-email-already-in-use.repository';
 import { PostgresShowUserPerIdRepository } from './database/repositories/postgres/postgres-show-user-per-id.repository';
+import { PostgresShowUserPerEmailRepository } from './database/repositories/postgres/postgres-show-user-per-email.repository';
 
 @Module({
   imports: [AuthModule],
@@ -38,7 +39,10 @@ import { PostgresShowUserPerIdRepository } from './database/repositories/postgre
     {
       provide: 'ShowUserPerIdRepository',
       useClass: PostgresShowUserPerIdRepository,
+    }, {
+      provide: 'ShowUserPerEmailRepository',
+      useClass: PostgresShowUserPerEmailRepository,
     },
   ],
 })
-export class UserModule {}
+export class UserModule { }

@@ -23,16 +23,16 @@ export class MessageUseCase {
     //   message.receiver,
     // );
 
-    if (!conversation) {
-      const conversationEntity = new ConversationEntity({
-        id: uuidV4(),
-        participant1Id: message.sender,
-        participant2Id: message.receiver,
-        messagesId: [],
-      });
+    // if (!conversation) {
+    //   const conversationEntity = new ConversationEntity({
+    //     id: uuidV4(),
+    //     participant1Id: message.sender,
+    //     participant2Id: message.receiver,
+    //     messagesId: [],
+    //   });
 
-      await this.createConversationRepository.execute(conversationEntity);
-    }
+    //   await this.createConversationRepository.execute(conversationEntity);
+    // }
 
     const messageToSend = new MessageEntity({
       content: message.content,
