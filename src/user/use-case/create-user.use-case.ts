@@ -4,7 +4,7 @@ import { UserEntity } from '../entities/user.entity';
 import { IHashProvider } from '@/shared/providers/hash-provider.interface';
 import { v4 as uuidV4 } from 'uuid';
 import { ICreateUserRepository } from '../database/repositories/create-user.repository';
-import { IEmailAlreadyInUseRepository } from '../database/repositories/postgres/email-already-in-use.repository';
+import { IEmailAlreadyInUseRepository } from '../database/repositories/email-already-in-use.repository';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -15,7 +15,7 @@ export class CreateUserUseCase {
     private readonly createUserRepository: ICreateUserRepository,
     @Inject('EmailAlreadyInUseRepository')
     private readonly emailAlreadyInUseRepository: IEmailAlreadyInUseRepository,
-  ) {}
+  ) { }
 
   async create(data: CreateUserDto) {
     // //Verificar se o email esta sendo utilizado
