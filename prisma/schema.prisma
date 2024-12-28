@@ -44,4 +44,7 @@ model Conversation {
   participant2Id String
 
   messagesId Message[]
+
+  @@unique([participant1Id, participant2Id])
+  @@unique([participant2Id, participant1Id])
 }

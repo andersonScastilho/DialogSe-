@@ -6,6 +6,7 @@ import { Inject } from '@nestjs/common';
 import { IEncryptDecryptProvider } from '@/shared/providers/encrypt-decrypt.interface';
 import { ICreateMessageRepository } from '../database/repositories/create-message.repository';
 import { ICreateConversationRepository } from '../database/repositories/create-conversation.repository';
+import { IShowConversationRepository } from '../database/repositories/show-conversation.repository';
 
 export class MessageUseCase {
   constructor(
@@ -15,24 +16,26 @@ export class MessageUseCase {
     private readonly createMessageRepository: ICreateMessageRepository,
     @Inject('EncryptDecryptProvider')
     private readonly encryptDecrypt: IEncryptDecryptProvider,
+    @Inject('ShowConversationRepository')
+    private readonly showConversationRepository: IShowConversationRepository
   ) { }
 
   async send(message: SendMessageDto) {
-    // const conversation = await this.conversationRepository.findByParticipants(
-    //   message.sender,
-    //   message.receiver,
-    // );
+    const conversation = await this.showConversationRepository.execute(message.receiver, message.sender)
+    let conversationId: string
 
-    // if (!conversation) {
-    //   const conversationEntity = new ConversationEntity({
-    //     id: uuidV4(),
-    //     participant1Id: message.sender,
-    //     participant2Id: message.receiver,
-    //     messagesId: [],
-    //   });
+    if (!conversation) {
+      const conversationEntity = new ConversationEntity({
+        id: uuidV4(),
+        participant1Id: message.sender,
+        participant2Id: message.receiver,
+        messagesId: [],
+      });
 
-    //   await this.createConversationRepository.execute(conversationEntity);
-    // }
+      await this.createConversationRepository.execute(conversationEntity);
+
+      conversationId = conversationEntity.id
+    }
 
     const messageToSend = new MessageEntity({
       content: message.content,
@@ -40,7 +43,7 @@ export class MessageUseCase {
       sender: message.sender,
       id: uuidV4(),
       sentAt: new Date(),
-      conversationId: ''
+      conversationId: conversationId
     });
 
     const { encrypted, iv } = this.encryptDecrypt.encrypt(

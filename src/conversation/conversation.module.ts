@@ -4,6 +4,7 @@ import { MessageController } from './message.controller';
 import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
 import { PostgresCreateMessageRepository } from './database/repositories/postgres/postgres-create-message.repository';
 import { PostgresCreateConversationRepository } from './database/repositories/postgres/postgres-create-conversation.repository';
+import { PostgresShowConversationRepository } from './database/repositories/postgres/postgres-show-conversation.repository';
 
 @Module({
   controllers: [MessageController],
@@ -16,6 +17,9 @@ import { PostgresCreateConversationRepository } from './database/repositories/po
     {
       provide: 'CreateMessageRepository',
       useClass: PostgresCreateMessageRepository,
+    }, {
+      provide: 'ShowConversationRepository',
+      useClass: PostgresShowConversationRepository,
     },
     {
       provide: 'EncryptDecryptProvider',
