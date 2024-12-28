@@ -1,5 +1,5 @@
 import { ConversationEntity } from "@/conversation/entities/conversation.entity";
-import { ICreateConversationRepository } from "../repositories/create-conversation.repository";
+import { ICreateConversationRepository } from "../create-conversation.repository";
 import { prismaClient } from "@/shared/database/prisma-client";
 
 export class PostgresCreateConversationRepository implements ICreateConversationRepository {

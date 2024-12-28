@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { MessageUseCase } from './use-case/message.use-case';
 import { MessageController } from './message.controller';
 import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
-import { PostgresCreateMessageRepository } from './database/postgres/postgres-create-message.repository';
-import { PostgresCreateConversationRepository } from './database/postgres/postgres-create-conversation.repository';
+import { PostgresCreateMessageRepository } from './database/repositories/postgres/postgres-create-message.repository';
+import { PostgresCreateConversationRepository } from './database/repositories/postgres/postgres-create-conversation.repository';
 
 @Module({
   controllers: [MessageController],
