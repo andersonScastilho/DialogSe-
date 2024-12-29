@@ -8,7 +8,7 @@ import { ICreateMessageRepository } from '../database/repositories/create-messag
 import { ICreateConversationRepository } from '../database/repositories/create-conversation.repository';
 import { IShowConversationRepository } from '../database/repositories/show-conversation.repository';
 
-export class MessageUseCase {
+export class SendMessageUseCase {
   constructor(
     @Inject('CreateConversationRepository')
     private readonly createConversationRepository: ICreateConversationRepository,
@@ -17,12 +17,15 @@ export class MessageUseCase {
     @Inject('EncryptDecryptProvider')
     private readonly encryptDecrypt: IEncryptDecryptProvider,
     @Inject('ShowConversationRepository')
-    private readonly showConversationRepository: IShowConversationRepository
-  ) { }
+    private readonly showConversationRepository: IShowConversationRepository,
+  ) {}
 
   async send(message: SendMessageDto) {
-    const conversation = await this.showConversationRepository.execute(message.receiver, message.sender)
-    let conversationId: string
+    const conversation = await this.showConversationRepository.execute(
+      message.receiver,
+      message.sender,
+    );
+    let conversationId: string;
 
     if (!conversation) {
       const conversationEntity = new ConversationEntity({
@@ -34,7 +37,7 @@ export class MessageUseCase {
 
       await this.createConversationRepository.execute(conversationEntity);
 
-      conversationId = conversationEntity.id
+      conversationId = conversationEntity.id;
     }
 
     const messageToSend = new MessageEntity({
@@ -43,7 +46,7 @@ export class MessageUseCase {
       sender: message.sender,
       id: uuidV4(),
       sentAt: new Date(),
-      conversationId: conversationId
+      conversationId: conversationId,
     });
 
     const { encrypted, iv } = this.encryptDecrypt.encrypt(

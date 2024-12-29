@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MessageUseCase } from './use-case/message.use-case';
+import { MessageUseCase } from './use-case/send-message.use-case';
 import { MessageController } from './message.controller';
 import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
 import { PostgresCreateMessageRepository } from './database/repositories/postgres/postgres-create-message.repository';
@@ -12,12 +12,13 @@ import { PostgresShowConversationRepository } from './database/repositories/post
     MessageUseCase,
     {
       provide: 'CreateConversationRepository',
-      useClass: PostgresCreateConversationRepository
+      useClass: PostgresCreateConversationRepository,
     },
     {
       provide: 'CreateMessageRepository',
       useClass: PostgresCreateMessageRepository,
-    }, {
+    },
+    {
       provide: 'ShowConversationRepository',
       useClass: PostgresShowConversationRepository,
     },
@@ -27,4 +28,4 @@ import { PostgresShowConversationRepository } from './database/repositories/post
     },
   ],
 })
-export class ConversationModule { }
+export class ConversationModule {}
