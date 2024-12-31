@@ -14,8 +14,8 @@ export class UserController {
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly showUserUseCase: ShowUserUseCase,
     private readonly signInUserUseCase: SignInUserUseCase,
-    private readonly searchUserUseCase: SearchUserUseCase
-  ) { }
+    private readonly searchUserUseCase: SearchUserUseCase,
+  ) {}
 
   @Post()
   async create(@Body() data: CreateUserDto) {
@@ -27,10 +27,12 @@ export class UserController {
   }
 
   @Get('search')
-  async search(@Body() data: { filter: string, sort: string }) {
-    const result = await this.searchUserUseCase.search(data)
+  async search(
+    @Body() data: { filter: string; sort: string; sortDir: string },
+  ) {
+    const result = await this.searchUserUseCase.search(data);
 
-    return result
+    return result;
   }
 
   @Get(':id')
@@ -46,11 +48,10 @@ export class UserController {
 
   @Post('sign-in')
   async signIn(@Body() body: SignInUserDto) {
-    const { email, password } = body
+    const { email, password } = body;
 
-    const acessToken = await this.signInUserUseCase.signIn(email, password)
+    const acessToken = await this.signInUserUseCase.signIn(email, password);
 
-    return acessToken
-
+    return acessToken;
   }
 }
