@@ -7,6 +7,7 @@ import { ShowUserUseCase } from './use-case/show-user.use-case';
 import { SignInUserDto } from './dtos/sign-in-user.dto';
 import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 import { SearchUserUseCase } from './use-case/search-user.user-case';
+import { SearchUserDto } from './dtos/search-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -27,9 +28,7 @@ export class UserController {
   }
 
   @Get('search')
-  async search(
-    @Body() data: { filter: string; sort: string; sortDir: string },
-  ) {
+  async search(@Body() data: SearchUserDto) {
     const result = await this.searchUserUseCase.search(data);
 
     return result;

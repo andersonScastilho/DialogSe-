@@ -1,5 +1,4 @@
 import { BadRequestError } from '@/shared/errors/bad-request.error';
-import { IUserRepository } from '../database/repositories/user.repository';
 import { Inject } from '@nestjs/common';
 import { ISearchUserRepository } from '../database/repositories/search-user.repository';
 
@@ -16,12 +15,16 @@ export class SearchUserUseCase {
   ) {}
 
   async search(searchParams: SearchParams) {
-    if (!searchParams.sort || !searchParams.filter) {
+    if (!searchParams.filter) {
       throw new BadRequestError(
         'Está faltando informações, verifique e tente novamente.',
       );
     }
-
+    if (searchParams.sortDir && !searchParams.sort) {
+      throw new BadRequestError(
+        'Para definir a direção de ordenação, é obrigatório selecionar o campo de ordenação.',
+      );
+    }
     const result = await this.searchUserRepository.execute(searchParams);
 
     return result;
