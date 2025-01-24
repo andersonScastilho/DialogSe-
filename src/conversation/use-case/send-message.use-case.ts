@@ -25,7 +25,9 @@ export class SendMessageUseCase {
       message.receiver,
       message.sender,
     );
+
     let conversationId: string;
+    conversationId = conversation.id;
 
     if (!conversation) {
       const conversationEntity = new ConversationEntity({
