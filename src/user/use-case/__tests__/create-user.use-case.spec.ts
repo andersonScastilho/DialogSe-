@@ -51,9 +51,37 @@ describe('Create User Use Case', () => {
         ),
     ).rejects.toBeInstanceOf(ConflictError);
   });
+
   it('It is not possible to create a user without firstname', async () => {
     let user = UserDataBuilder({});
     user.firstName = '';
+
+    expect(async () => await sut.create(user)).rejects.toBeInstanceOf(
+      EntityValidationError,
+    );
+  });
+
+  it('It is not possible to create a user without lastname', async () => {
+    let user = UserDataBuilder({});
+    user.lastName = '';
+
+    expect(async () => await sut.create(user)).rejects.toBeInstanceOf(
+      EntityValidationError,
+    );
+  });
+
+  it('It is not possible to create a user without email', async () => {
+    let user = UserDataBuilder({});
+    user.email = '';
+
+    expect(async () => await sut.create(user)).rejects.toBeInstanceOf(
+      EntityValidationError,
+    );
+  });
+
+  it('It is not possible to create a user without password', async () => {
+    let user = UserDataBuilder({});
+    user.password = '';
 
     expect(async () => await sut.create(user)).rejects.toBeInstanceOf(
       EntityValidationError,
