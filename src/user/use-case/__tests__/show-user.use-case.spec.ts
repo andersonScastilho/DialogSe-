@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ShowUserUseCase } from '../show-user.use-case';
 import { UserInMemoryDatabase } from '@/user/database/repositories/in-memory/in-memory.database';
 import { ShowUserPerIdRepositoryInMemory } from '@/user/database/repositories/in-memory/in-memory-show-user-per-id.repository';
+import { BadRequestError } from '@/shared/errors/bad-request.error';
 
 describe('Show User Use Case', () => {
   let sut: ShowUserUseCase;
@@ -29,5 +30,11 @@ describe('Show User Use Case', () => {
     const result = entity.toJson();
 
     expect(result).toStrictEqual(users[0]);
+  });
+
+  it('It is not possible to show a user without id', async () => {
+    expect(async () => await sut.show('')).rejects.toBeInstanceOf(
+      BadRequestError,
+    );
   });
 });
