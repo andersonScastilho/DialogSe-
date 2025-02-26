@@ -6,6 +6,12 @@ import { ConversationModule } from './conversation/conversation.module';
 import { WebscoketModule } from './websockets/websocket.module';
 
 @Module({
-  imports: [UserModule, AuthModule, ConversationModule, ConfigModule.forRoot(), WebscoketModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    ConversationModule,
+    WebscoketModule,
+    ConfigModule.forRoot(),
+  ],
 })
-export class AppModule { }
+export class AppModule {}
