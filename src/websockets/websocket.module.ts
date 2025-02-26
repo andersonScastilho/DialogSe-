@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { ChatGateway } from "./chat.gateway";
+import { EventGateway } from "./event.gateway";
 
-@Module({ providers: [ChatGateway] })
+@Module({ providers: [EventGateway] })
 export class WebscoketModule { }
