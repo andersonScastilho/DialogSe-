@@ -25,11 +25,17 @@ export class SendMessageUseCase {
     private readonly showUserPerIdRepository: IShowUserPerIdRepository,
     @Inject('ConversationEventsGateway')
     private readonly messageeventsgateway: IConversationEventsGateway,
-  ) {}
+  ) { }
 
-  async send(message: SendMessageDto) {
+  async existsConversastion(participant1Id: string, participant2Id: string): Promise<string | null> {
+
+    return
+  }
+
+  async send(data: SendMessageDto) {
     try {
-      const receiverIsValid = await this.showUserPerIdRepository.execute(
+
+      /*    const receiverIsValid = await this.showUserPerIdRepository.execute(
         message.receiver,
       );
       const senderIsValid = await this.showUserPerIdRepository.execute(
@@ -38,49 +44,52 @@ export class SendMessageUseCase {
       if (!receiverIsValid || !senderIsValid) {
         throw new BadRequestError('Sender ou Receiver não encontrado');
       }
+      */
 
-      const conversation = await this.showConversationRepository.execute(
-        receiverIsValid.id,
-        senderIsValid.id,
-      );
+      //Verificando se já existe uma conversa entre as duas pessoas
+      const conversation = await this.showConversationRepository.execute(data.sender, data.receiver)
+      let conversationId = conversation?.id
 
-      let conversationId: string;
-      conversationId = conversation.id;
+      //Caso não tenha nenhuma conversa entre os dois membros, será criado uma 
+      if (!conversationId) {
 
-      if (!conversation) {
         const conversationEntity = new ConversationEntity({
           id: uuidV4(),
-          participant1Id: message.sender,
-          participant2Id: message.receiver,
+          participant1Id: data.sender,
+          participant2Id: data.receiver,
           messagesId: [],
         });
 
-        await this.createConversationRepository.execute(conversationEntity);
+        conversationId = conversationEntity.id
 
-        conversationId = conversationEntity.id;
+        await this.createConversationRepository.execute(conversationEntity);
       }
 
+
       const messageToSend = new MessageEntity({
-        content: message.content,
-        receiver: message.receiver,
-        sender: message.sender,
+        content: data.content,
+        receiver: data.receiver,
+        sender: data.sender,
         id: uuidV4(),
         sentAt: new Date(),
         conversationId: conversationId,
       });
 
-      const { encrypted, iv } = this.encryptDecrypt.encrypt(
-        messageToSend.content,
-      );
+      // const { encrypted, iv } = this.encryptDecrypt.encrypt(
+      //   messageToSend.content,
+      // );
+      // messageToSend.content = encrypted;
 
       this.messageeventsgateway.sendMessage(messageToSend);
 
-      messageToSend.content = encrypted;
       await this.createMessageRepository.execute(messageToSend.toJson());
+
+
     } catch (error) {
       if (error.error === 'User not found') {
         throw new BadRequestError('Sender or Receiver not found.');
       } else {
+        console.log(error)
         throw new BadRequestError(
           'Ocorreu um erro inesperado, tente novamente.',
         );
@@ -88,3 +97,5 @@ export class SendMessageUseCase {
     }
   }
 }
+
+
