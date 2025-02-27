@@ -6,6 +6,7 @@ import { PostgresCreateMessageRepository } from './database/repositories/postgre
 import { PostgresCreateConversationRepository } from './database/repositories/postgres/postgres-create-conversation.repository';
 import { PostgresShowConversationRepository } from './database/repositories/postgres/postgres-show-conversation.repository';
 import { PostgresShowUserPerIdRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-id.repository';
+import { ConversationEventsGateway } from '@/websockets/message/conversation-events.gateway';
 
 @Module({
   controllers: [MessageController],
@@ -30,6 +31,10 @@ import { PostgresShowUserPerIdRepository } from '@/user/database/repositories/po
     {
       provide: 'EncryptDecryptProvider',
       useClass: CryptoEncryptDecrypt,
+    },
+    {
+      provide: 'ConversationEventsGateway',
+      useClass: ConversationEventsGateway,
     },
   ],
 })

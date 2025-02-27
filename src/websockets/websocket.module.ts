@@ -1,5 +1,4 @@
-import { Module } from "@nestjs/common";
-import { EventGateway } from "./event.gateway";
+import { Module } from '@nestjs/common';
 
-@Module({ providers: [EventGateway] })
-export class WebscoketModule { }
+@Module({})
+export class WebscoketModule {}

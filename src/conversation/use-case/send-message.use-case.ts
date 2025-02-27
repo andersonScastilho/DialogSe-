@@ -9,6 +9,7 @@ import { ICreateConversationRepository } from '../database/repositories/create-c
 import { IShowConversationRepository } from '../database/repositories/show-conversation.repository';
 import { IShowUserPerIdRepository } from '@/user/database/repositories/show-user-per-id.repository';
 import { BadRequestError } from '@/shared/errors/bad-request.error';
+import { IConversationEventsGateway } from '@/websockets/message/conversation-event-gateway.interface';
 
 export class SendMessageUseCase {
   constructor(
@@ -22,6 +23,8 @@ export class SendMessageUseCase {
     private readonly showConversationRepository: IShowConversationRepository,
     @Inject('ShowUserPerIdRepository')
     private readonly showUserPerIdRepository: IShowUserPerIdRepository,
+    @Inject('ConversationEventsGateway')
+    private readonly messageeventsgateway: IConversationEventsGateway,
   ) {}
 
   async send(message: SendMessageDto) {
@@ -69,6 +72,8 @@ export class SendMessageUseCase {
       const { encrypted, iv } = this.encryptDecrypt.encrypt(
         messageToSend.content,
       );
+
+      this.messageeventsgateway.sendMessage(messageToSend);
 
       messageToSend.content = encrypted;
       await this.createMessageRepository.execute(messageToSend.toJson());
