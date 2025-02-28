@@ -1,6 +1,7 @@
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
+  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
@@ -27,12 +28,12 @@ export class ConversationEventsGateway
     console.log('New User Disconnected...', client.id);
 
     this.server.emit('user-left', {
-      // Corrigido o evento aqui
       message: `User Left the chat:${client.id}`,
     });
   }
 
+  @SubscribeMessage('message')
   sendMessage(message: IMessageEntity) {
-    this.server.emit(`${message.conversationId}`, message.content);
+    this.server.emit(`${message.receiver}`, message.content);
   }
 }
