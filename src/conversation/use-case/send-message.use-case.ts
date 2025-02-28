@@ -25,34 +25,36 @@ export class SendMessageUseCase {
     private readonly showUserPerIdRepository: IShowUserPerIdRepository,
     @Inject('ConversationEventsGateway')
     private readonly messageeventsgateway: IConversationEventsGateway,
-  ) { }
+  ) {}
 
-  async existsConversastion(participant1Id: string, participant2Id: string): Promise<string | null> {
-
-    return
+  async existsConversastion(
+    participant1Id: string,
+    participant2Id: string,
+  ): Promise<string | null> {
+    return;
   }
 
   async send(data: SendMessageDto) {
     try {
-
-      /*    const receiverIsValid = await this.showUserPerIdRepository.execute(
-        message.receiver,
+      const receiverIsValid = await this.showUserPerIdRepository.execute(
+        data.receiver,
       );
       const senderIsValid = await this.showUserPerIdRepository.execute(
-        message.sender,
+        data.sender,
       );
       if (!receiverIsValid || !senderIsValid) {
         throw new BadRequestError('Sender ou Receiver não encontrado');
       }
-      */
 
       //Verificando se já existe uma conversa entre as duas pessoas
-      const conversation = await this.showConversationRepository.execute(data.sender, data.receiver)
-      let conversationId = conversation?.id
+      const conversation = await this.showConversationRepository.execute(
+        data.sender,
+        data.receiver,
+      );
+      let conversationId = conversation?.id;
 
-      //Caso não tenha nenhuma conversa entre os dois membros, será criado uma 
+      //Caso não tenha nenhuma conversa entre os dois membros, será criado uma
       if (!conversationId) {
-
         const conversationEntity = new ConversationEntity({
           id: uuidV4(),
           participant1Id: data.sender,
@@ -60,11 +62,10 @@ export class SendMessageUseCase {
           messagesId: [],
         });
 
-        conversationId = conversationEntity.id
+        conversationId = conversationEntity.id;
 
         await this.createConversationRepository.execute(conversationEntity);
       }
-
 
       const messageToSend = new MessageEntity({
         content: data.content,
@@ -83,13 +84,11 @@ export class SendMessageUseCase {
       this.messageeventsgateway.sendMessage(messageToSend);
 
       await this.createMessageRepository.execute(messageToSend.toJson());
-
-
     } catch (error) {
       if (error.error === 'User not found') {
         throw new BadRequestError('Sender or Receiver not found.');
       } else {
-        console.log(error)
+        console.log(error);
         throw new BadRequestError(
           'Ocorreu um erro inesperado, tente novamente.',
         );
@@ -97,5 +96,3 @@ export class SendMessageUseCase {
     }
   }
 }
-
-
