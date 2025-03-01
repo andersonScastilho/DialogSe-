@@ -17,12 +17,12 @@ export class SearchUserUseCase {
   async search(searchParams: SearchParams) {
     if (!searchParams.filter) {
       throw new BadRequestError(
-        'Está faltando informações, verifique e tente novamente.',
+        'To set the sorting direction, you must first select a sorting field.',
       );
     }
     if (searchParams.sortDir && !searchParams.sort) {
       throw new BadRequestError(
-        'Para definir a direção de ordenação, é obrigatório selecionar o campo de ordenação.',
+        'To define the sorting direction, it is mandatory to select the sorting field.',
       );
     }
     const result = await this.searchUserRepository.execute(searchParams);
