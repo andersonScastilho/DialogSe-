@@ -16,7 +16,7 @@ export function UserDataBuilder(user: Props) {
 
 interface PropsEntity extends Partial<IUserEntity> { }
 
-export function UserEntityuserBuilder(user: PropsEntity): IUserEntity {
+export function UserEntityDataBuilder(user: PropsEntity): IUserEntity {
   return {
     email: user.email ?? faker.internet.email(),
     firstName: user.firstName ?? faker.person.firstName(),

@@ -21,6 +21,10 @@ export class UserRules implements IUserEntity {
 
   @IsString()
   @IsNotEmpty()
+  username: string;
+
+  @IsString()
+  @IsNotEmpty()
   lastName: string;
 
   @IsString()
@@ -39,12 +43,14 @@ export class UserRules implements IUserEntity {
     email,
     firstName,
     lastName,
+    username,
     createdAt,
     password_hash,
     id,
   }: IUserEntity) {
     Object.assign(this, {
       createdAt,
+      username,
       email,
       firstName,
       lastName,

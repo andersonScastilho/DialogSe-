@@ -11,6 +11,7 @@ export class UserInMemoryDatabase implements IUserRepository {
       firstName: 'Jonh',
       lastName: 'Doe',
       id: 'c2ab5a04-88e6-4880-9e40-d4f7ec7dce9e',
+      username: "johnzinho",
       password_hash: '12345678',
     },
   ];
