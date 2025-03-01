@@ -8,20 +8,27 @@ export interface IPayloadJwtToken {
 @Injectable()
 export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
-  async generateTokenJwt(userId: string) {
+
+  generateTokenJwt(userId: string) {
     const payload: IPayloadJwtToken = {
       sub: userId,
     };
 
-    const acessToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload, {
+      secret: process.env.JWTSECRET,
+    });
 
-    return { acessToken };
+    return { accessToken };
   }
 
-  async verifyTokenJwt(acessToken: string) {
-    const acessTokenPayload: IPayloadJwtToken =
-      await this.jwtService.verify(acessToken);
+  verifyTokenJwt(accessToken: string) {
+    const accessTokenPayload: IPayloadJwtToken = this.jwtService.verify(
+      accessToken,
+      {
+        secret: process.env.JWTSECRET,
+      },
+    );
 
-    return { acessTokenPayload };
+    return { ...accessTokenPayload };
   }
 }

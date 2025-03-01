@@ -7,9 +7,11 @@ import { PostgresCreateConversationRepository } from './database/repositories/po
 import { PostgresShowConversationRepository } from './database/repositories/postgres/postgres-show-conversation.repository';
 import { PostgresShowUserPerIdRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-id.repository';
 import { ConversationEventsGateway } from '@/websockets/message/conversation-events.gateway';
+import { AuthModule } from '@/auth/auth.module';
 
 @Module({
   controllers: [MessageController],
+  imports: [AuthModule],
   providers: [
     SendMessageUseCase,
     {

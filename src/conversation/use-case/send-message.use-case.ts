@@ -81,9 +81,8 @@ export class SendMessageUseCase {
       if (error.error === 'User not found') {
         throw new BadRequestError('Sender or Receiver not found.');
       } else {
-        console.log(error);
         throw new BadRequestError(
-          'Ocorreu um erro inesperado, tente novamente.',
+          'An unexpected error occurred. Please try again.',
         );
       }
     }
