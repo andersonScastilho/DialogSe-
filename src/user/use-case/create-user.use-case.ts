@@ -17,19 +17,19 @@ export class CreateUserUseCase {
     private readonly emailAlreadyInUseRepository: IEmailAlreadyInUseRepository,
   ) { }
 
-  async create(data: CreateUserDto) {
+  async create(user: CreateUserDto) {
     // //Verificar se o email esta sendo utilizado
-    await this.emailAlreadyInUseRepository.execute(data.email);
+    await this.emailAlreadyInUseRepository.execute(user.email);
 
     //Gerando id do usuario
     const generatedUserId = uuidV4();
 
     const entity = new UserEntity({
-      email: data.email,
-      firstName: data.firstName,
+      email: user.email,
+      firstName: user.firstName,
       id: generatedUserId,
-      lastName: data.lastName,
-      password_hash: data.password,
+      lastName: user.lastName,
+      password_hash: user.password,
       createdAt: new Date(),
     });
 

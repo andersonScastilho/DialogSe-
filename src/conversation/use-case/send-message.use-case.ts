@@ -25,15 +25,15 @@ export class SendMessageUseCase {
     private readonly showUserPerIdRepository: IShowUserPerIdRepository,
     @Inject('ConversationEventsGateway')
     private readonly messageeventsgateway: IConversationEventsGateway,
-  ) {}
+  ) { }
 
-  async send(data: SendMessageDto) {
+  async send(message: SendMessageDto) {
     try {
       const receiverIsValid = await this.showUserPerIdRepository.execute(
-        data.receiver,
+        message.receiver,
       );
       const senderIsValid = await this.showUserPerIdRepository.execute(
-        data.sender,
+        message.sender,
       );
       if (!receiverIsValid || !senderIsValid) {
         throw new BadRequestError('Sender ou Receiver não encontrado');
@@ -41,8 +41,8 @@ export class SendMessageUseCase {
 
       //Verificando se já existe uma conversa entre as duas pessoas
       const conversation = await this.showConversationRepository.execute(
-        data.sender,
-        data.receiver,
+        message.sender,
+        message.receiver,
       );
       let conversationId = conversation?.id;
 
@@ -50,8 +50,8 @@ export class SendMessageUseCase {
       if (!conversationId) {
         const conversationEntity = new ConversationEntity({
           id: uuidV4(),
-          participant1Id: data.sender,
-          participant2Id: data.receiver,
+          participant1Id: message.sender,
+          participant2Id: message.receiver,
           messagesId: [],
         });
 
@@ -61,9 +61,9 @@ export class SendMessageUseCase {
       }
 
       const messageToSend = new MessageEntity({
-        content: data.content,
-        receiver: data.receiver,
-        sender: data.sender,
+        content: message.content,
+        receiver: message.receiver,
+        sender: message.sender,
         id: uuidV4(),
         sentAt: new Date(),
         conversationId: conversationId,

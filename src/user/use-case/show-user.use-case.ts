@@ -7,12 +7,12 @@ export class ShowUserUseCase {
   @Inject('ShowUserPerIdRepository')
   private readonly showUserPerIdRepository: IShowUserPerIdRepository;
 
-  async show(data: string) {
-    if (!data) {
+  async show(userId: string) {
+    if (!userId) {
       throw new BadRequestError('Missing data!');
     }
 
-    const user = await this.showUserPerIdRepository.execute(data);
+    const user = await this.showUserPerIdRepository.execute(userId);
 
     const userEntity = new UserEntity(user);
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateUserUseCase } from './use-case/create-user.use-case';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { OutputUserDto } from './dtos/output-user.dto';
@@ -8,6 +8,7 @@ import { SignInUserDto } from './dtos/sign-in-user.dto';
 import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 import { SearchUserUseCase } from './use-case/search-user.user-case';
 import { SearchUserDto } from './dtos/search-user.dto';
+import { AuthGuard } from '@/auth/auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -16,7 +17,7 @@ export class UserController {
     private readonly showUserUseCase: ShowUserUseCase,
     private readonly signInUserUseCase: SignInUserUseCase,
     private readonly searchUserUseCase: SearchUserUseCase,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() data: CreateUserDto) {
@@ -27,6 +28,7 @@ export class UserController {
     return output;
   }
 
+  @UseGuards(AuthGuard)
   @Get('search')
   async search(@Body() data: SearchUserDto) {
     const result = await this.searchUserUseCase.search(data);
@@ -34,6 +36,7 @@ export class UserController {
     return result;
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async show(@Param() data: ShowUserDto) {
     const { id } = data;
@@ -45,6 +48,7 @@ export class UserController {
     return output;
   }
 
+  @UseGuards(AuthGuard)
   @Post('sign-in')
   async signIn(@Body() body: SignInUserDto) {
     const { email, password } = body;
