@@ -27,13 +27,6 @@ export class SendMessageUseCase {
     private readonly messageeventsgateway: IConversationEventsGateway,
   ) {}
 
-  async existsConversastion(
-    participant1Id: string,
-    participant2Id: string,
-  ): Promise<string | null> {
-    return;
-  }
-
   async send(data: SendMessageDto) {
     try {
       const receiverIsValid = await this.showUserPerIdRepository.execute(
