@@ -17,7 +17,7 @@ model User {
   id            String   @unique
   firstName     String
   lastName      String
-  nickname      String
+  nickname      String   @unique
   email         String   @unique
   password_hash String
   createdAt     DateTime
