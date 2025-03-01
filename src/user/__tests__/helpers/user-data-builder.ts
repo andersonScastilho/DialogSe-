@@ -4,24 +4,26 @@ import { faker } from '@faker-js/faker';
 
 interface Props extends Partial<CreateUserDto> { }
 
-export function UserDataBuilder(data: Props) {
+export function UserDataBuilder(user: Props) {
   return {
-    email: data.email ?? faker.internet.email(),
-    firstName: data.firstName ?? faker.person.firstName(),
-    lastName: data.lastName ?? faker.person.lastName(),
-    password: data.password ?? faker.internet.password(),
+    email: user.email ?? faker.internet.email(),
+    firstName: user.firstName ?? faker.person.firstName(),
+    lastName: user.lastName ?? faker.person.lastName(),
+    password: user.password ?? faker.internet.password(),
+    username: user.username ?? faker.internet.username()
   };
 }
 
 interface PropsEntity extends Partial<IUserEntity> { }
 
-export function UserEntityDataBuilder(data: PropsEntity): IUserEntity {
+export function UserEntityuserBuilder(user: PropsEntity): IUserEntity {
   return {
-    email: data.email ?? faker.internet.email(),
-    firstName: data.firstName ?? faker.person.firstName(),
-    lastName: data.lastName ?? faker.person.lastName(),
-    password_hash: data.password_hash ?? faker.internet.password(),
-    id: data.id ?? faker.string.uuid()
+    email: user.email ?? faker.internet.email(),
+    firstName: user.firstName ?? faker.person.firstName(),
+    lastName: user.lastName ?? faker.person.lastName(),
+    password_hash: user.password_hash ?? faker.internet.password(),
+    id: user.id ?? faker.string.uuid(),
+    username: user.username ?? faker.internet.username()
   };
 }
 

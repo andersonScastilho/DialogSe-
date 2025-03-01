@@ -14,13 +14,6 @@ export class PostgresShowUserPerEmailRepository implements IShowUserPerEmailRepo
             throw new NotFoundError('User not found');
         }
 
-        return {
-            email: user.email,
-            firstName: user.firstName,
-            id: user.id,
-            lastName: user.lastName,
-            password_hash: user.password_hash,
-            createdAt: user.createdAt
-        }
+        return user
     }
 }   

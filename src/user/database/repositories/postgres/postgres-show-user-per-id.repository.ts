@@ -4,8 +4,7 @@ import { prismaClient } from '@/shared/database/prisma-client';
 import { NotFoundError } from '@/shared/errors/not-found.error';
 
 export class PostgresShowUserPerIdRepository
-  implements IShowUserPerIdRepository
-{
+  implements IShowUserPerIdRepository {
   async execute(userId: string): Promise<IUserEntity> {
     const user = await prismaClient.user.findUnique({
       where: {
@@ -17,13 +16,6 @@ export class PostgresShowUserPerIdRepository
       throw new NotFoundError('User not found');
     }
 
-    return {
-      email: user.email,
-      firstName: user.firstName,
-      id: user.id,
-      lastName: user.lastName,
-      password_hash: user.password_hash,
-      createdAt: user.createdAt,
-    };
+    return user
   }
 }

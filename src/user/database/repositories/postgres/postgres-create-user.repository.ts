@@ -8,6 +8,7 @@ export class PostgresCreateUserRepository implements ICreateUserRepository {
       data: {
         email: user.email,
         firstName: user.firstName,
+        username: user.username,
         id: user.id,
         lastName: user.lastName,
         password_hash: user.password_hash,

@@ -28,6 +28,7 @@ export class CreateUserUseCase {
       email: user.email,
       firstName: user.firstName,
       id: generatedUserId,
+      username: user.username,
       lastName: user.lastName,
       password_hash: user.password,
       createdAt: new Date(),
