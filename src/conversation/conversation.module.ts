@@ -4,7 +4,7 @@ import { MessageController } from './message.controller';
 import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
 import { PostgresCreateMessageRepository } from './database/repositories/postgres/postgres-create-message.repository';
 import { PostgresCreateConversationRepository } from './database/repositories/postgres/postgres-create-conversation.repository';
-import { PostgresShowConversationRepository } from './database/repositories/postgres/postgres-show-conversation.repository';
+import { PostgresShowConversationByUsernamesRepository } from './database/repositories/postgres/postgres-show-conversation-by-username.repository';
 import { PostgresShowUserPerIdRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-id.repository';
 import { ConversationEventsGateway } from '@/websockets/message/conversation-events.gateway';
 import { AuthModule } from '@/auth/auth.module';
@@ -25,7 +25,7 @@ import { PostgresShowUserPerUsernameRepository } from '@/user/database/repositor
     },
     {
       provide: 'ShowConversationRepository',
-      useClass: PostgresShowConversationRepository,
+      useClass: PostgresShowConversationByUsernamesRepository,
     },
     {
       provide: 'ShowUserPerIdRepository',
