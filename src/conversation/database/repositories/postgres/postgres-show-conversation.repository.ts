@@ -6,22 +6,22 @@ export class PostgresShowConversationRepository
   implements IShowConversationRepository
 {
   async execute(
-    participant1Id: string,
-    participant2Id: string,
+    usernameA: string,
+    usernameB: string,
   ): Promise<IConversationEntity> {
     const conversation = await prismaClient.conversation.findFirst({
       where: {
         OR: [
           {
             AND: {
-              participant1Id: participant2Id,
-              participant2Id: participant1Id,
+              usernameA: usernameB,
+              usernameB: usernameA,
             },
           },
           {
             AND: {
-              participant2Id: participant2Id,
-              participant1Id: participant1Id,
+              usernameB: usernameB,
+              usernameA: usernameA,
             },
           },
         ],

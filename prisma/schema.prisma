@@ -40,12 +40,12 @@ model Message {
 }
 
 model Conversation {
-  id             String @unique
-  participant1Id String
-  participant2Id String
+  id        String @unique
+  usernameA String
+  usernameB String
 
   messagesId Message[]
 
-  @@unique([participant1Id, participant2Id])
-  @@unique([participant2Id, participant1Id])
+  @@unique([usernameA, usernameB])
+  @@unique([usernameB, usernameA])
 }

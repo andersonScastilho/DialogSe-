@@ -1,11 +1,9 @@
-import { IsString, IsUUID } from "class-validator";
+import { IsString } from 'class-validator';
 
 export class CreateConversationDto {
-    @IsString()
-    @IsUUID()
-    participant1Id: string;
+  @IsString()
+  usernameA: string;
 
-    @IsString()
-    @IsUUID()
-    participant2Id: string;
+  @IsString()
+  usernameB: string;
 }

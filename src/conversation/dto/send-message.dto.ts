@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { IMessageEntity } from '../entities/message.entity';
 
 export class SendMessageDto implements Partial<IMessageEntity> {
@@ -7,10 +7,10 @@ export class SendMessageDto implements Partial<IMessageEntity> {
   content: string;
 
   @IsString()
-  @IsUUID()
+  @IsNotEmpty()
   receiver: string;
 
   @IsString()
-  @IsUUID()
+  @IsNotEmpty()
   sender: string;
 }

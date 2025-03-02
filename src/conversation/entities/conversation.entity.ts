@@ -1,6 +1,6 @@
 export interface IConversationEntity {
-  participant1Id: string;
-  participant2Id: string;
+  usernameA: string;
+  usernameB: string;
   messagesId?: string[];
   id: string;
 }
@@ -8,12 +8,12 @@ export interface IConversationEntity {
 export class ConversationEntity {
   constructor(private readonly conversation: IConversationEntity) {}
 
-  get participant1Id() {
-    return this.conversation.participant1Id;
+  get usernameA() {
+    return this.conversation.usernameA;
   }
 
-  get participant2Id() {
-    return this.conversation.participant2Id;
+  get usernameB() {
+    return this.conversation.usernameB;
   }
 
   get id() {

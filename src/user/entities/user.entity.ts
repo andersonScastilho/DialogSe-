@@ -6,7 +6,7 @@ export interface IUserEntity {
   firstName: string;
   lastName: string;
   email: string;
-  username: string
+  username: string;
   password_hash: string;
   createdAt?: Date;
 }
@@ -36,10 +36,10 @@ export class UserEntity {
     this.user.lastName = lastName;
   }
   get username() {
-    return this.user.username
+    return this.user.username;
   }
   set username(username: string) {
-    this.user.username = username
+    this.user.username = username;
   }
 
   get email() {

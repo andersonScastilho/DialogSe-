@@ -8,6 +8,7 @@ import { PostgresShowConversationRepository } from './database/repositories/post
 import { PostgresShowUserPerIdRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-id.repository';
 import { ConversationEventsGateway } from '@/websockets/message/conversation-events.gateway';
 import { AuthModule } from '@/auth/auth.module';
+import { PostgresShowUserPerUsernameRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-username.repository';
 
 @Module({
   controllers: [MessageController],
@@ -37,6 +38,10 @@ import { AuthModule } from '@/auth/auth.module';
     {
       provide: 'ConversationEventsGateway',
       useClass: ConversationEventsGateway,
+    },
+    {
+      provide: 'ShowUserPerUsernameRepository',
+      useClass: PostgresShowUserPerUsernameRepository,
     },
   ],
 })

@@ -17,7 +17,7 @@ export class UserController {
     private readonly showUserUseCase: ShowUserUseCase,
     private readonly signInUserUseCase: SignInUserUseCase,
     private readonly searchUserUseCase: SearchUserUseCase,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Body() data: CreateUserDto) {
@@ -48,7 +48,6 @@ export class UserController {
     return output;
   }
 
-  @UseGuards(AuthGuard)
   @Post('sign-in')
   async signIn(@Body() body: SignInUserDto) {
     const { email, password } = body;

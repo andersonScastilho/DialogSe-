@@ -1,17 +1,19 @@
-import { ConversationEntity } from "@/conversation/entities/conversation.entity";
-import { ICreateConversationRepository } from "../create-conversation.repository";
-import { prismaClient } from "@/shared/database/prisma-client";
+import { ConversationEntity } from '@/conversation/entities/conversation.entity';
+import { ICreateConversationRepository } from '../create-conversation.repository';
+import { prismaClient } from '@/shared/database/prisma-client';
 
-export class PostgresCreateConversationRepository implements ICreateConversationRepository {
-    async execute(conversation: ConversationEntity): Promise<void> {
-        await prismaClient.conversation.create({
-            data: {
-                id: conversation.id,
-                participant1Id: conversation.participant1Id,
-                participant2Id: conversation.participant2Id,
-            }
-        })
+export class PostgresCreateConversationRepository
+  implements ICreateConversationRepository
+{
+  async execute(conversation: ConversationEntity): Promise<void> {
+    await prismaClient.conversation.create({
+      data: {
+        id: conversation.id,
+        usernameA: conversation.usernameA,
+        usernameB: conversation.usernameB,
+      },
+    });
 
-        return
-    }
+    return;
+  }
 }

@@ -7,9 +7,9 @@ import { IEncryptDecryptProvider } from '@/shared/providers/encrypt-decrypt.inte
 import { ICreateMessageRepository } from '../database/repositories/create-message.repository';
 import { ICreateConversationRepository } from '../database/repositories/create-conversation.repository';
 import { IShowConversationRepository } from '../database/repositories/show-conversation.repository';
-import { IShowUserPerIdRepository } from '@/user/database/repositories/show-user-per-id.repository';
 import { BadRequestError } from '@/shared/errors/bad-request.error';
 import { IConversationEventsGateway } from '@/websockets/message/conversation-event-gateway.interface';
+import { IShowUserPerUsernameRepository } from '@/user/database/repositories/show-user-per-username.repository';
 
 export class SendMessageUseCase {
   constructor(
@@ -21,20 +21,21 @@ export class SendMessageUseCase {
     private readonly encryptDecrypt: IEncryptDecryptProvider,
     @Inject('ShowConversationRepository')
     private readonly showConversationRepository: IShowConversationRepository,
-    @Inject('ShowUserPerIdRepository')
-    private readonly showUserPerIdRepository: IShowUserPerIdRepository,
+    @Inject('ShowUserPerUsernameRepository')
+    private readonly showUserPerUsernameRepository: IShowUserPerUsernameRepository,
     @Inject('ConversationEventsGateway')
     private readonly messageeventsgateway: IConversationEventsGateway,
-  ) { }
+  ) {}
 
   async send(message: SendMessageDto) {
     try {
-      const receiverIsValid = await this.showUserPerIdRepository.execute(
+      const receiverIsValid = await this.showUserPerUsernameRepository.execute(
         message.receiver,
       );
-      const senderIsValid = await this.showUserPerIdRepository.execute(
+      const senderIsValid = await this.showUserPerUsernameRepository.execute(
         message.sender,
       );
+
       if (!receiverIsValid || !senderIsValid) {
         throw new BadRequestError('Sender ou Receiver não encontrado');
       }
@@ -50,8 +51,8 @@ export class SendMessageUseCase {
       if (!conversationId) {
         const conversationEntity = new ConversationEntity({
           id: uuidV4(),
-          participant1Id: message.sender,
-          participant2Id: message.receiver,
+          usernameA: message.sender,
+          usernameB: message.receiver,
           messagesId: [],
         });
 
