@@ -11,7 +11,7 @@ export class PostgresSearchUserRepository implements ISearchUserRepository {
 
     const result = await prismaClient.user.findMany({
       where: {
-        firstName: searchParams.filter,
+        username: searchParams.filter,
       },
       orderBy,
     });
