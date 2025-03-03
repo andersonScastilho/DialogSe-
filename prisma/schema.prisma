@@ -44,7 +44,7 @@ model Conversation {
   usernameA String
   usernameB String
 
-  messagesId Message[]
+  messages Message[]
 
   @@unique([usernameA, usernameB])
   @@unique([usernameB, usernameA])
