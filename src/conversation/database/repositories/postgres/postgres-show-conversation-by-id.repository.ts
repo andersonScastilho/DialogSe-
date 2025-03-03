@@ -6,11 +6,11 @@ export class PostgresShowConversationPerIdRepository
   implements IShowConversationPerIdRepository
 {
   async execute(conversationId: string): Promise<IConversationEntity> {
-    console.log(conversationId);
     const conversation = await prismaClient.conversation.findUnique({
       where: {
         id: conversationId,
       },
+      include: { messages: true },
     });
 
     return conversation;

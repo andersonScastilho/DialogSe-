@@ -53,7 +53,7 @@ export class SendMessageUseCase {
           id: uuidV4(),
           usernameA: message.sender,
           usernameB: message.receiver,
-          messagesId: [],
+          messages: [],
         });
 
         conversationId = conversationEntity.id;

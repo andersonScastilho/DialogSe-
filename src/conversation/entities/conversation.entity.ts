@@ -1,7 +1,9 @@
+import { IMessageEntity } from './message.entity';
+
 export interface IConversationEntity {
   usernameA: string;
   usernameB: string;
-  messagesId?: string[];
+  messages?: IMessageEntity[];
   id: string;
 }
 
@@ -20,8 +22,8 @@ export class ConversationEntity {
     return this.conversation.id;
   }
 
-  get messagesId() {
-    return this.conversation.messagesId;
+  get messages() {
+    return this.conversation.messages;
   }
 
   toJson() {
