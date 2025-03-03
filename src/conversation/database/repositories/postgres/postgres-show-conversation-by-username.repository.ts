@@ -1,9 +1,9 @@
 import { IConversationEntity } from '@/conversation/entities/conversation.entity';
 import { prismaClient } from '@/shared/database/prisma-client';
-import { IShowConversationByUsernamesRepository } from '../show-conversation.repository';
+import { IShowConversationPerUsernamesRepository } from '../show-conversation-by-username.repository';
 
-export class PostgresShowConversationByUsernamesRepository
-  implements IShowConversationByUsernamesRepository
+export class PostgresShowConversationPerUsernamesRepository
+  implements IShowConversationPerUsernamesRepository
 {
   async execute(
     usernameA: string,

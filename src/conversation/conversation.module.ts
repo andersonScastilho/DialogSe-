@@ -4,17 +4,20 @@ import { MessageController } from './message.controller';
 import { CryptoEncryptDecrypt } from './providers/crypto-encrypt-decrypt';
 import { PostgresCreateMessageRepository } from './database/repositories/postgres/postgres-create-message.repository';
 import { PostgresCreateConversationRepository } from './database/repositories/postgres/postgres-create-conversation.repository';
-import { PostgresShowConversationByUsernamesRepository } from './database/repositories/postgres/postgres-show-conversation-by-username.repository';
+import { PostgresShowConversationPerUsernamesRepository } from './database/repositories/postgres/postgres-show-conversation-by-username.repository';
 import { PostgresShowUserPerIdRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-id.repository';
 import { ConversationEventsGateway } from '@/websockets/message/conversation-events.gateway';
 import { AuthModule } from '@/auth/auth.module';
 import { PostgresShowUserPerUsernameRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-username.repository';
+import { ShowConversationPerIdUseCase } from './use-case/show-conversation-per-id.use-case';
+import { PostgresShowConversationPerIdRepository } from './database/repositories/postgres/postgres-show-conversation-by-id.repository';
 
 @Module({
   controllers: [MessageController],
   imports: [AuthModule],
   providers: [
     SendMessageUseCase,
+    ShowConversationPerIdUseCase,
     {
       provide: 'CreateConversationRepository',
       useClass: PostgresCreateConversationRepository,
@@ -25,7 +28,7 @@ import { PostgresShowUserPerUsernameRepository } from '@/user/database/repositor
     },
     {
       provide: 'ShowConversationRepository',
-      useClass: PostgresShowConversationByUsernamesRepository,
+      useClass: PostgresShowConversationPerUsernamesRepository,
     },
     {
       provide: 'ShowUserPerIdRepository',
@@ -42,6 +45,10 @@ import { PostgresShowUserPerUsernameRepository } from '@/user/database/repositor
     {
       provide: 'ShowUserPerUsernameRepository',
       useClass: PostgresShowUserPerUsernameRepository,
+    },
+    {
+      provide: 'ShowConversationPerIdRepository',
+      useClass: PostgresShowConversationPerIdRepository,
     },
   ],
 })
