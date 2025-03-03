@@ -6,7 +6,7 @@ import { Inject } from '@nestjs/common';
 import { IEncryptDecryptProvider } from '@/shared/providers/encrypt-decrypt.interface';
 import { ICreateMessageRepository } from '../database/repositories/create-message.repository';
 import { ICreateConversationRepository } from '../database/repositories/create-conversation.repository';
-import { IShowConversationPerUsernamesRepository } from '../database/repositories/show-conversation-by-username.repository';
+import { IShowConversationPerUsernamesRepository } from '../database/repositories/show-conversation-per-username.repository';
 import { BadRequestError } from '@/shared/errors/bad-request.error';
 import { IConversationEventsGateway } from '@/websockets/message/conversation-event-gateway.interface';
 import { IShowUserPerUsernameRepository } from '@/user/database/repositories/show-user-per-username.repository';
@@ -25,7 +25,7 @@ export class SendMessageUseCase {
     private readonly showUserPerUsernameRepository: IShowUserPerUsernameRepository,
     @Inject('ConversationEventsGateway')
     private readonly messageeventsgateway: IConversationEventsGateway,
-  ) {}
+  ) { }
 
   async send(message: SendMessageDto) {
     try {
