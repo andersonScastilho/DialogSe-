@@ -5,14 +5,14 @@ import { AuthGuard } from '@/auth/auth.guard';
 import { ShowConversationPerIdDto } from './dto/show-conversation-per-id.dto';
 import { ShowConversationPerIdUseCase } from './use-case/show-conversation-per-id.use-case';
 
+@UseGuards(AuthGuard)
 @Controller('conversations')
 export class MessageController {
   constructor(
     private readonly sendMessageUseCase: SendMessageUseCase,
     private readonly showConversationPerIdUseCase: ShowConversationPerIdUseCase,
-  ) {}
+  ) { }
 
-  @UseGuards(AuthGuard)
   @Post('message')
   async create(@Body() body: SendMessageDto) {
     await this.sendMessageUseCase.send(body);
