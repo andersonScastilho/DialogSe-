@@ -11,6 +11,7 @@ import { AuthModule } from '@/auth/auth.module';
 import { PostgresShowUserPerUsernameRepository } from '@/user/database/repositories/postgres/postgres-show-user-per-username.repository';
 import { ShowConversationPerIdUseCase } from './use-case/show-conversation-per-id.use-case';
 import { PostgresShowConversationPerIdRepository } from './database/repositories/postgres/postgres-show-conversation-by-id.repository';
+import { PostgresIndexConversationsPerUserRepository } from './database/repositories/postgres/postgres-index-conversations-per-user.repository';
 
 @Module({
   controllers: [MessageController],
@@ -49,7 +50,10 @@ import { PostgresShowConversationPerIdRepository } from './database/repositories
     {
       provide: 'ShowConversationPerIdRepository',
       useClass: PostgresShowConversationPerIdRepository,
+    }, {
+      provide: 'IndexConversationsPerUserRepository',
+      useClass: PostgresIndexConversationsPerUserRepository,
     },
   ],
 })
-export class ConversationModule {}
+export class ConversationModule { }

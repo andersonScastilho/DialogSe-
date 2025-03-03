@@ -28,4 +28,9 @@ export class MessageController {
 
     return conversation;
   }
+
+  @Get('conversations')
+  async index(@Param() param: any) {
+    return
+  }
 }
