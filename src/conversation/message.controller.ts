@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { SendMessageUseCase } from './use-case/send-message.use-case';
 import { SendMessageDto } from './dto/send-message.dto';
 import { AuthGuard } from '@/auth/auth.guard';
 import { ShowConversationPerIdDto } from './dto/show-conversation-per-id.dto';
 import { ShowConversationPerIdUseCase } from './use-case/show-conversation-per-id.use-case';
+import { IndexConversationPerUserUsecase } from './use-case/index-conversation-per-user.use-case';
 
 @UseGuards(AuthGuard)
 @Controller('conversations')
@@ -11,6 +12,7 @@ export class MessageController {
   constructor(
     private readonly sendMessageUseCase: SendMessageUseCase,
     private readonly showConversationPerIdUseCase: ShowConversationPerIdUseCase,
+    private readonly indexConversationsPerUserUseCase: IndexConversationPerUserUsecase
   ) { }
 
   @Post('message')
@@ -30,7 +32,11 @@ export class MessageController {
   }
 
   @Get('conversations')
-  async index(@Param() param: any) {
-    return
+  async index(@Req() req: Request) {
+    const userAuth = req['user-auth']
+
+    const conversations = await this.indexConversationsPerUserUseCase.execute(userAuth?.sub)
+
+    return conversations
   }
 }
