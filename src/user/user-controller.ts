@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { CreateUserUseCase } from './use-case/create-user.use-case';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { OutputUserDto } from './dtos/output-user.dto';
@@ -17,7 +17,7 @@ export class UserController {
     private readonly showUserUseCase: ShowUserUseCase,
     private readonly signInUserUseCase: SignInUserUseCase,
     private readonly searchUserUseCase: SearchUserUseCase,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() data: CreateUserDto) {
@@ -37,11 +37,11 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Get(':id')
-  async show(@Param() data: ShowUserDto) {
-    const { id } = data;
+  @Get('user')
+  async show(@Req() req: Request) {
+    const userAuth = req['user-auth']
 
-    const user = await this.showUserUseCase.show(id);
+    const user = await this.showUserUseCase.show(userAuth?.sub);
 
     const output = OutputUserDto.output(user);
 
