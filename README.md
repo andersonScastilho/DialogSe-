@@ -24,7 +24,7 @@
 
 ### **Principais**
 
-⬜ Criar uma conversa  
+✅ Criar uma conversa  
 ✅ Buscar todas as mensagens de uma conversa  
 ✅ Enviar uma mensagem na conversa  
 ✅ Buscar todas as conversas de um usuário
