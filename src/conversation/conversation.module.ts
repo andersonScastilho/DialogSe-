@@ -14,6 +14,7 @@ import { PostgresShowConversationPerIdRepository } from './database/repositories
 import { PostgresIndexConversationsPerUserRepository } from './database/repositories/postgres/postgres-index-conversations-per-user.repository';
 import { IndexConversationPerUserUsecase } from './use-case/index-conversation-per-user.use-case';
 import { PostgresConversationExistsBetweenUsernames } from './database/repositories/postgres/postgres-conversation-exists-between-usernames.repository';
+import { CreateConversationUseCase } from './use-case/create-conversation.use-case';
 
 @Module({
   controllers: [MessageController],
@@ -22,6 +23,7 @@ import { PostgresConversationExistsBetweenUsernames } from './database/repositor
     SendMessageUseCase,
     ShowConversationPerIdUseCase,
     IndexConversationPerUserUsecase,
+    CreateConversationUseCase,
     {
       provide: 'CreateConversationRepository',
       useClass: PostgresCreateConversationRepository,
