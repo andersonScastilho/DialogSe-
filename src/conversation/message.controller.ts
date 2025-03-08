@@ -24,7 +24,7 @@ export class MessageController {
     private readonly showConversationPerIdUseCase: ShowConversationPerIdUseCase,
     private readonly indexConversationsPerUserUseCase: IndexConversationPerUserUsecase,
     private readonly createConversationUseCase: CreateConversationUseCase,
-  ) {}
+  ) { }
 
   @Post('message')
   async sendMessage(@Body() body: SendMessageDto) {
@@ -42,7 +42,7 @@ export class MessageController {
     return conversation;
   }
 
-  @Get('conversations')
+  @Get()
   async index(@Req() req: Request) {
     const userAuth = req['user-auth'];
 
@@ -53,9 +53,10 @@ export class MessageController {
     return conversations;
   }
 
-  @Post('conversations')
-  async create(usernames: CreateConversationDto) {
-    await this.createConversationUseCase.execute(usernames);
+  @Post()
+  async create(@Body() body: CreateConversationDto) {
+
+    await this.createConversationUseCase.execute(body);
 
     return;
   }
