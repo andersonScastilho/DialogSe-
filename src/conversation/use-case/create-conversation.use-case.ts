@@ -5,6 +5,7 @@ import { ConversationEntity } from '../entities/conversation.entity';
 import { v4 as uuidV4 } from 'uuid';
 import { IConversationExistBetweenUsernames } from '../database/repositories/conversation-exists-between-usernames.repository';
 import { Inject } from '@nestjs/common';
+import { IShowUserPerUsernameRepository } from '@/user/database/repositories/show-user-per-username.repository';
 
 export class CreateConversationUseCase {
   constructor(
@@ -12,8 +13,13 @@ export class CreateConversationUseCase {
     private readonly conversationExistsBetweenUsernames: IConversationExistBetweenUsernames,
     @Inject('CreateConversationRepository')
     private readonly createConversationRepository: ICreateConversationRepository,
-  ) {}
+    @Inject('ShowUserPerUsernameRepository')
+    private readonly showUserPerUsernameRepository: IShowUserPerUsernameRepository
+  ) { }
   async execute(conversation: CreateConversationDto) {
+    const usernameA = await this.showUserPerUsernameRepository.execute(conversation.usernameA)
+    const usernameB = await this.showUserPerUsernameRepository.execute(conversation.usernameB)
+
     const conversationExists =
       await this.conversationExistsBetweenUsernames.execute(
         conversation.usernameA,
