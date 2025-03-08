@@ -1,6 +1,8 @@
 import { BadRequestError } from '@/shared/errors/bad-request.error';
 import { Inject } from '@nestjs/common';
 import { ISearchUserRepository } from '../database/repositories/search-user.repository';
+import { OutputUserDto } from '../dtos/output-user.dto';
+import { UserEntity } from '../entities/user.entity';
 
 export interface SearchParams {
   filter: string | null;
@@ -12,7 +14,7 @@ export class SearchUserUseCase {
   constructor(
     @Inject('SearchUserRepository')
     private readonly searchUserRepository: ISearchUserRepository,
-  ) {}
+  ) { }
 
   async search(searchParams: SearchParams) {
     if (!searchParams.filter) {
@@ -27,6 +29,12 @@ export class SearchUserUseCase {
     }
     const result = await this.searchUserRepository.execute(searchParams);
 
-    return result;
+    const output = result.map((result) => {
+      const entity = new UserEntity(result)
+
+      return OutputUserDto.output(entity)
+    })
+
+    return output;
   }
 }
