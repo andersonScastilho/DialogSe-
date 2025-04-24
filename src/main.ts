@@ -23,10 +23,14 @@ async function bootstrap() {
     new ConflictFilter(),
     new NotFoundErrorFilter(),
     new BadRequestErrorFilter(),
-    new UnauthorizedFilter()
+    new UnauthorizedFilter(),
   );
 
-  await app.listen(3000);
+  app.enableCors({
+    origin: '*', // permite qualquer origem
+  });
+
+  await app.listen(8080);
 }
 
 bootstrap();
