@@ -12,6 +12,7 @@ import { PostgresEmailAlreadyInUseRepository } from './database/repositories/pos
 import { PostgresShowUserPerIdRepository } from './database/repositories/postgres/postgres-show-user-per-id.repository';
 import { PostgresShowUserPerEmailRepository } from './database/repositories/postgres/postgres-show-user-per-email.repository';
 import { PostgresSearchUserRepository } from './database/repositories/postgres/postgres-search-user.repository';
+import { PostgresUsernameAlreadyInUseRepository } from './database/repositories/postgres/postgres-username-already-in-use.repository';
 
 @Module({
   imports: [AuthModule],
@@ -36,6 +37,10 @@ import { PostgresSearchUserRepository } from './database/repositories/postgres/p
     {
       provide: 'EmailAlreadyInUseRepository',
       useClass: PostgresEmailAlreadyInUseRepository,
+    },
+    {
+      provide: 'UsernameAlreadyInUseRepository',
+      useClass: PostgresUsernameAlreadyInUseRepository,
     },
     {
       provide: 'ShowUserPerIdRepository',

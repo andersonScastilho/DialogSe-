@@ -5,6 +5,7 @@ import { IHashProvider } from '@/shared/providers/hash-provider.interface';
 import { v4 as uuidV4 } from 'uuid';
 import { ICreateUserRepository } from '../database/repositories/create-user.repository';
 import { IEmailAlreadyInUseRepository } from '../database/repositories/email-already-in-use.repository';
+import { IUsernameAlreadyInUseRepository } from '../database/repositories/username-already-in-use.repository';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -15,11 +16,16 @@ export class CreateUserUseCase {
     private readonly createUserRepository: ICreateUserRepository,
     @Inject('EmailAlreadyInUseRepository')
     private readonly emailAlreadyInUseRepository: IEmailAlreadyInUseRepository,
-  ) { }
+    @Inject('UsernameAlreadyInUseRepository')
+    private readonly usernameAlreadyInUseRepository: IUsernameAlreadyInUseRepository,
+  ) {}
 
   async create(user: CreateUserDto) {
     // //Verificar se o email esta sendo utilizado
     await this.emailAlreadyInUseRepository.execute(user.email);
+
+    // //Verificar se o usuario esta sendo utilizado
+    await this.usernameAlreadyInUseRepository.execute(user.username);
 
     //Gerando id do usuario
     const generatedUserId = uuidV4();
