@@ -1,8 +1,8 @@
-import { CreateUserDto } from '@/user/dtos/create-user.dto';
+import { SignUpUserDto } from '@/user/dtos/sign-up-user.dto';
 import { IUserEntity } from '@/user/entities/user.entity';
 import { faker } from '@faker-js/faker';
 
-interface Props extends Partial<CreateUserDto> { }
+interface Props extends Partial<SignUpUserDto> {}
 
 export function UserDataBuilder(user: Props) {
   return {
@@ -10,11 +10,11 @@ export function UserDataBuilder(user: Props) {
     firstName: user.firstName ?? faker.person.firstName(),
     lastName: user.lastName ?? faker.person.lastName(),
     password: user.password ?? faker.internet.password(),
-    username: user.username ?? faker.internet.username()
+    username: user.username ?? faker.internet.username(),
   };
 }
 
-interface PropsEntity extends Partial<IUserEntity> { }
+interface PropsEntity extends Partial<IUserEntity> {}
 
 export function UserEntityDataBuilder(user: PropsEntity): IUserEntity {
   return {
@@ -23,7 +23,6 @@ export function UserEntityDataBuilder(user: PropsEntity): IUserEntity {
     lastName: user.lastName ?? faker.person.lastName(),
     password_hash: user.password_hash ?? faker.internet.password(),
     id: user.id ?? faker.string.uuid(),
-    username: user.username ?? faker.internet.username()
+    username: user.username ?? faker.internet.username(),
   };
 }
-

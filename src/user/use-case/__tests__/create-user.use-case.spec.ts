@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserUseCase } from '../create-user.use-case';
+import { CreateUserUseCase } from '../sign-up-user.use-case';
 import { UserDataBuilder } from '@/user/__tests__/helpers/user-data-builder';
 import { UserEntity } from '@/user/entities/user.entity';
 import { ConflictError } from '@/shared/errors/conflict.error';

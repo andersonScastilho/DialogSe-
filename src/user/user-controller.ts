@@ -7,8 +7,6 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CreateUserUseCase } from './use-case/create-user.use-case';
-import { CreateUserDto } from './dtos/create-user.dto';
 import { OutputUserDto } from './dtos/output-user.dto';
 import { ShowUserDto } from './dtos/show-user.dto';
 import { ShowUserUseCase } from './use-case/show-user.use-case';
@@ -17,19 +15,21 @@ import { SignInUserUseCase } from './use-case/sign-in-user.use-case';
 import { SearchUserUseCase } from './use-case/search-user.user-case';
 import { SearchUserDto } from './dtos/search-user.dto';
 import { AuthGuard } from '@/auth/auth.guard';
+import { SignUpUserUseCase } from './use-case/sign-up-user.use-case';
+import { SignUpUserDto } from './dtos/sign-up-user.dto';
 
 @Controller('users')
 export class UserController {
   constructor(
-    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly signUpUserUseCase: SignUpUserUseCase,
     private readonly showUserUseCase: ShowUserUseCase,
     private readonly signInUserUseCase: SignInUserUseCase,
     private readonly searchUserUseCase: SearchUserUseCase,
   ) {}
 
   @Post('sign-up')
-  async create(@Body() data: CreateUserDto) {
-    const entity = await this.createUserUseCase.create(data);
+  async signUp(@Body() data: SignUpUserDto) {
+    const entity = await this.signUpUserUseCase.create(data);
 
     const output = OutputUserDto.output(entity);
 

@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CreateUserUseCase } from './use-case/create-user.use-case';
 import { UserController } from './user-controller';
 import { UserInMemoryDatabase } from './database/repositories/in-memory/in-memory.database';
 import { ShowUserUseCase } from './use-case/show-user.use-case';
@@ -13,12 +12,13 @@ import { PostgresShowUserPerIdRepository } from './database/repositories/postgre
 import { PostgresShowUserPerEmailRepository } from './database/repositories/postgres/postgres-show-user-per-email.repository';
 import { PostgresSearchUserRepository } from './database/repositories/postgres/postgres-search-user.repository';
 import { PostgresUsernameAlreadyInUseRepository } from './database/repositories/postgres/postgres-username-already-in-use.repository';
+import { SignUpUserUseCase } from './use-case/sign-up-user.use-case';
 
 @Module({
   imports: [AuthModule],
   controllers: [UserController],
   providers: [
-    CreateUserUseCase,
+    SignUpUserUseCase,
     ShowUserUseCase,
     SignInUserUseCase,
     SearchUserUseCase,
