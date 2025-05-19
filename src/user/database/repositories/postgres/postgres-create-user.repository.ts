@@ -12,7 +12,6 @@ export class PostgresCreateUserRepository implements ICreateUserRepository {
         id: user.id,
         lastName: user.lastName,
         password_hash: user.password_hash,
-        createdAt: user.createdAt,
       },
     });
 

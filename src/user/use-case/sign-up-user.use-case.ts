@@ -18,7 +18,7 @@ export class SignUpUserUseCase {
     private readonly emailAlreadyInUseRepository: IEmailAlreadyInUseRepository,
     @Inject('UsernameAlreadyInUseRepository')
     private readonly usernameAlreadyInUseRepository: IUsernameAlreadyInUseRepository,
-  ) {}
+  ) { }
 
   async create(user: SignUpUserDto) {
     // //Verificar se o email esta sendo utilizado
@@ -37,7 +37,6 @@ export class SignUpUserUseCase {
       username: user.username,
       lastName: user.lastName,
       password_hash: user.password,
-      createdAt: new Date(),
     });
 
     //Esta hasheando a senha
