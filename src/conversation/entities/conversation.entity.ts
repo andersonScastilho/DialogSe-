@@ -1,29 +1,30 @@
+import { ParticipantConversationDto } from '../dto/participant-conversation.dto';
 import { IMessageEntity } from './message.entity';
 
 export interface IConversationEntity {
-  usernameA: string;
-  usernameB: string;
   messages?: IMessageEntity[];
+  participants: ParticipantConversationDto[];
+  isGroup: boolean;
   id: string;
 }
 
 export class ConversationEntity {
   constructor(private readonly conversation: IConversationEntity) {}
 
-  get usernameA() {
-    return this.conversation.usernameA;
-  }
-
-  get usernameB() {
-    return this.conversation.usernameB;
-  }
-
   get id() {
     return this.conversation.id;
   }
 
+  get isGroup() {
+    return this.conversation.isGroup;
+  }
+
   get messages() {
     return this.conversation.messages;
+  }
+
+  get participants() {
+    return this.conversation.participants;
   }
 
   toJson() {

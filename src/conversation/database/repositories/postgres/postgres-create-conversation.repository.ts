@@ -9,8 +9,16 @@ export class PostgresCreateConversationRepository
     await prismaClient.conversation.create({
       data: {
         id: conversation.id,
-        usernameA: conversation.usernameA,
-        usernameB: conversation.usernameB,
+        isGroup: conversation.isGroup,
+        Participant: {
+          create: conversation.participants.map((participant) => ({
+            user: {
+              connect: {
+                id: participant.userId,
+              },
+            },
+          })),
+        },
       },
     });
 
