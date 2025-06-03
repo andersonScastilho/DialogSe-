@@ -1,10 +1,14 @@
 import { IsArray, IsBoolean } from 'class-validator';
-import { ParticipantConversationDto } from './participant-conversation.dto';
+
+class ParticipantInputDto {
+  @IsArray()
+  usernames: [];
+}
 
 export class CreateConversationDto {
   @IsBoolean()
   isGroup: boolean;
 
   @IsArray()
-  participants: ParticipantConversationDto[];
+  participants: ParticipantInputDto[];
 }
