@@ -9,6 +9,7 @@ export class CreateConversationUseCase {
   constructor(
     @Inject('CreateConversationRepository')
     private readonly createConversationRepository: ICreateConversationRepository,
+    @Inject('ShowUserPerUsernameRepository')
     private readonly showUserPerUsernameRepository: IShowUserPerUsernameRepository,
   ) {}
   async execute(conversation: CreateConversationDto) {
