@@ -11,15 +11,26 @@ export class CreateConversationUseCase {
     private readonly createConversationRepository: ICreateConversationRepository,
     @Inject('ShowUserPerUsernameRepository')
     private readonly showUserPerUsernameRepository: IShowUserPerUsernameRepository,
-  ) {}
+  ) { }
   async execute(conversation: CreateConversationDto) {
-    // const conversationEntity = new ConversationEntity({
-    //   id: uuidV4(),
-    //   isGroup: conversation.isGroup,
-    //   participants: conversation.participants,
-    // });
 
-    // await this.createConversationRepository.execute(conversationEntity);
+    const validatedUsers = await Promise.all(
+      conversation.participants.map((participant) => {
+        return this.showUserPerUsernameRepository.execute(participant.username)
+      })
+    )
+
+    const users = validatedUsers.map((user) => {
+      return { userId: user.id }
+    })
+
+    const conversationEntity = new ConversationEntity({
+      id: uuidV4(),
+      isGroup: conversation.isGroup,
+      participants: users
+    });
+
+    await this.createConversationRepository.execute(conversationEntity);
 
     return;
   }

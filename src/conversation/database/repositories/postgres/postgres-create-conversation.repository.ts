@@ -3,8 +3,7 @@ import { ICreateConversationRepository } from '../create-conversation.repository
 import { prismaClient } from '@/shared/database/prisma-client';
 
 export class PostgresCreateConversationRepository
-  implements ICreateConversationRepository
-{
+  implements ICreateConversationRepository {
   async execute(conversation: ConversationEntity): Promise<void> {
     await prismaClient.conversation.create({
       data: {
